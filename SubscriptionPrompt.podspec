@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name = "SubscriptionPrompt"
-  spec.version = "1.0.0"
+  spec.version = "0.0.1"
   spec.summary = "Subscription View Controller like the Tinder uses."
   spec.homepage = "https://github.com/jakecraige/RGB"
   spec.license = { type: 'MIT', file: 'LICENSE' }
