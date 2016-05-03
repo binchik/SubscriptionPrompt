@@ -7,7 +7,7 @@ Pod::Spec.new do |spec|
   spec.authors = { "Your Name" => 'your-email@example.com' }
   spec.social_media_url = "http://twitter.com/thoughtbot"
 
-  spec.platform = :ios, "9.1"
+  spec.platform = :ios, "8.0"
   spec.requires_arc = true
   spec.source = { git: "https://github.com/Binur/RGB.git", tag: "v#{spec.version}", submodules: true }
   spec.source_files = "SubscriptionPrompt/**/*.{h,swift}"
