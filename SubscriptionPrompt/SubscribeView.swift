@@ -88,6 +88,7 @@ final class SubscribeView: UIView {
         let tableView = UITableView()
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.allowsSelection = false
         tableView.scrollEnabled = false
         tableView.separatorStyle = .None
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: tableViewCellIdentifier)
