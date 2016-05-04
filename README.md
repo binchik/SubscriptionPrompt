@@ -1,5 +1,7 @@
 # SubscriptionPrompt
-SubscriptionPrompt is a UIViewController with a carousel at the top and a number of options at the bottom.
+SubscriptionPrompt is a UIViewController with a carousel at the top and a number of options at the bottom. Written in Swift, works for Objective-C as well.
+
+<img alt="SubscriptionPrompt screenshot" src="https://raw.githubusercontent.com/Binur/SubscriptionPrompt/master/assets/Simulator Screen Shot May 4, 2016, 12.29.13 PM.png" width="375">
 
 # Installation
 
@@ -20,6 +22,8 @@ init(title: String, images: [UIImage], commentTexts: [String],
       commentSubtitleTexts: [String], subscribeOptionsTexts: [String], 
       cancelOptionText: String)
 ```
+
+and present it
 
 `animateDraggingToTheRight(duration:)` - animates a little drag to the right and back with the given duration [ux hint for the user that the carousel is draggable]
 
