@@ -25,7 +25,13 @@ extension SubscribeViewDelegate where Self: UIViewController {
 final class SubscribeView: UIView {
     var delegate: SubscribeViewDelegate?
     
-    var title = "Get [App Name] Plus"
+    var title = "Get [App Name] Plus" {
+        didSet {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.titleLabel.text = self.title
+            }
+        }
+    }
     var subscribeOptionsTexts = ["12 MONTHS FOR $4.58/mo", "6 MONTHS FOR $5.83/mo", "1 MONTH FOR $9.99/mo"] {
         didSet { reloadTableView() }
     }
