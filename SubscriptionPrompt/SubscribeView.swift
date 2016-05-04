@@ -101,6 +101,7 @@ final class SubscribeView: UIView {
                      subscribeOptionsTexts: [String], cancelOptionText: String) {
         self.init(frame: .zero)
         self.title = title
+        self.titleLabel.text = title
         self.images = images
         self.commentTexts = commentTexts
         self.commentSubtitleTexts = commentSubtitleTexts
