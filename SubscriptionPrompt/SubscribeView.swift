@@ -88,7 +88,6 @@ final class SubscribeView: UIView {
         let tableView = UITableView()
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.allowsSelection = false
         tableView.scrollEnabled = false
         tableView.separatorStyle = .None
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: tableViewCellIdentifier)
@@ -201,6 +200,7 @@ extension SubscribeView: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(tableViewCellIdentifier)!
+        cell.selectionStyle = .None
         cell.contentView.backgroundColor = UIColor.orangeColor()
             .colorWithAlphaComponent(1 / (CGFloat(indexPath.row) + 1) + 0.2)
         cell.textLabel?.font = .systemFontOfSize(17)

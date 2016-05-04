@@ -76,7 +76,7 @@ public class SubscriptionViewController: UIViewController, SubscribeViewDelegate
             $0.left.equalTo(view.snp_left).offset(8)
             $0.right.equalTo(view.snp_right).offset(-8)
             $0.top.equalTo(subscribeView.snp_bottom).offset(20)
-            $0.bottom.lessThanOrEqualTo(view.snp_bottom)
+            $0.bottom.equalTo(view.snp_bottom).offset(-10)
         }
     }
     
