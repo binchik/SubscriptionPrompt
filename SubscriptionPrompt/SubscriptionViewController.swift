@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-public protocol SubscriptionViewControllerDelegate {
+@objc public protocol SubscriptionViewControllerDelegate {
     func subscriptionViewControllerRowTapped(atIndex index: Int)
 }
 
