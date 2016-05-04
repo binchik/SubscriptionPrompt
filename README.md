@@ -7,7 +7,7 @@ SubscriptionPrompt is available via CocoaPods just write:
 
 `pod 'SubscriptionPrompt'`
 
-in your Pofile.
+in your Podfile.
 
 You may alternatively just copy the contents of the SubscriptionPrompt folder into your project.
 
