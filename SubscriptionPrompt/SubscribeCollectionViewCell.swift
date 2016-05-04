@@ -18,6 +18,7 @@ final class SubscribeCollectionViewCell: UICollectionViewCell {
     }()
     lazy var commentLabel: UILabel = {
         let label = UILabel()
+        label.numberOfLines = 0
         label.text = "Comment"
         label.textAlignment = .Center
         label.font = .systemFontOfSize(16)
@@ -26,6 +27,7 @@ final class SubscribeCollectionViewCell: UICollectionViewCell {
     }()
     lazy var commentSubtitleLabel: UILabel = {
         let label = UILabel()
+        label.numberOfLines = 0
         label.text = "Comment subtitle"
         label.textAlignment = .Center
         label.textColor = .lightGrayColor()
@@ -74,13 +76,13 @@ final class SubscribeCollectionViewCell: UICollectionViewCell {
         }
         commentLabel.snp_makeConstraints {
             $0.top.equalTo(imageView.snp_bottom)
-            $0.left.equalTo(contentView.snp_left)
-            $0.right.equalTo(contentView.snp_right)
+            $0.left.equalTo(contentView.snp_left).offset(4)
+            $0.right.equalTo(contentView.snp_right).offset(-4)
         }
         commentSubtitleLabel.snp_makeConstraints {
             $0.top.equalTo(commentLabel.snp_bottom).offset(4)
-            $0.left.equalTo(contentView.snp_left)
-            $0.right.equalTo(contentView.snp_right)
+            $0.left.equalTo(contentView.snp_left).offset(4)
+            $0.right.equalTo(contentView.snp_right).offset(-4)
             $0.bottom.equalTo(contentView.snp_bottom)
         }
     }
