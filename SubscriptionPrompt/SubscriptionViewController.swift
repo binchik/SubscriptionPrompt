@@ -14,7 +14,7 @@ import SnapKit
 }
 
 public class SubscriptionViewController: UIViewController, SubscribeViewDelegate {
-    var delegate: SubscriptionViewControllerDelegate?
+    public var delegate: SubscriptionViewControllerDelegate?
     
     private var subscribeView: SubscribeView
     private var constraintsSetUp = false
