@@ -28,6 +28,8 @@ init(title: String, images: [UIImage], commentTexts: [String],
 1. Fonts customizations.
 2. Colors customziations.
 3. Contents customizations.
+4. Get rid of SnapKit dependency.
+5. Documentation.
 
 
 
