@@ -57,7 +57,6 @@ final class SubscribeView: UIView {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFontOfSize(24)
-        label.text = "Get Kanji Ninja Plus"
         label.textAlignment = .Center
         return label
     }()
