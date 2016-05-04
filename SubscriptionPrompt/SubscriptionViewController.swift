@@ -9,7 +9,13 @@
 import UIKit
 import SnapKit
 
+public protocol SubscriptionViewControllerDelegate {
+    func subscriptionViewControllerRowTapped(atIndex index: Int)
+}
+
 public class SubscriptionViewController: UIViewController, SubscribeViewDelegate {
+    var delegate: SubscriptionViewControllerDelegate?
+    
     private var subscribeView: SubscribeView
     private var constraintsSetUp = false
     
@@ -65,5 +71,10 @@ public class SubscriptionViewController: UIViewController, SubscribeViewDelegate
     private func setupViews() {
         view.backgroundColor = UIColor(white: 0, alpha: 0.5)
         view.addSubview(subscribeView)
+    }
+    
+    func rowTapped(atIndex index: Int) {
+        guard let delegate = delegate else { return }
+        delegate.subscriptionViewControllerRowTapped(atIndex: index)
     }
 }

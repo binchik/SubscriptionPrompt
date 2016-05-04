@@ -14,6 +14,7 @@ private let tableViewCellIdentifier = "identifier"
 
 protocol SubscribeViewDelegate {
     func dismissButtonTouched()
+    func rowTapped(atIndex index: Int)
 }
 
 extension SubscribeViewDelegate where Self: UIViewController {
@@ -212,9 +213,12 @@ extension SubscribeView: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        guard let delegate = delegate where
-            indexPath.row == subscribeOptionsTexts.count else { return }
-        delegate.dismissButtonTouched()
+        guard let delegate = delegate else { return }
+        if indexPath.row < subscribeOptionsTexts.count {
+            delegate.rowTapped(atIndex: indexPath.row)
+        } else {
+            delegate.dismissButtonTouched()
+        }
     }
 }
 
