@@ -1,5 +1,5 @@
 # SubscriptionPrompt
-SubscriptionPrompt is a UIViewController with a carousel at the top and a number of options at the bottom. Written in Swift, works for Objective-C as well.
+SubscriptionPrompt is a UIViewController with a carousel at the top and a number of rows at the bottom. Written in Swift, works for Objective-C as well.
 
 <img alt="SubscriptionPrompt screenshot" src="https://raw.githubusercontent.com/Binur/SubscriptionPrompt/master/assets/Simulator Screen Shot May 4, 2016, 12.29.13 PM.png" width="375">
 
@@ -23,7 +23,20 @@ init(title: String, images: [UIImage], commentTexts: [String],
       cancelOptionText: String)
 ```
 
-and present it
+and present it.
+
+To get the index of tapped rows, implement the SubscriptionViewControllerDelegate.
+
+```
+override func viewDidLoad() {
+      super.viewDidLoad()
+      subscriptionViewController.delegate = self
+}
+
+func subscriptionViewControllerRowTapped(atIndex index: Int) {
+    print("tapped index: \(index)")
+}
+```
 
 `animateDraggingToTheRight(duration:)` - animates a little drag to the right and back with the given duration [ux hint for the user that the carousel is draggable]
 
