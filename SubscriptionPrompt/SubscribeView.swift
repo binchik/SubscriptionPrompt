@@ -25,6 +25,9 @@ extension SubscribeViewDelegate where Self: UIViewController {
 
 final class SubscribeView: UIView {
     var delegate: SubscribeViewDelegate?
+    var notNowButtonHidden = false {
+        didSet { self.reloadTableView() }
+    }
     
     var title = "Get [App Name] Plus" {
         didSet {
@@ -195,7 +198,7 @@ final class SubscribeView: UIView {
 
 extension SubscribeView: UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return subscribeOptionsTexts.count + 1
+        return subscribeOptionsTexts.count + (notNowButtonHidden ? 0 : 1)
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -218,7 +221,7 @@ extension SubscribeView: UITableViewDataSource, UITableViewDelegate {
         if indexPath.row < subscribeOptionsTexts.count {
             delegate.rowTapped(atIndex: indexPath.row)
         } else {
-            delegate.dismissButtonTouched()
+            if !notNowButtonHidden { delegate.dismissButtonTouched() }
         }
     }
 }

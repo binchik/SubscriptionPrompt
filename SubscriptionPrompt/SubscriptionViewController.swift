@@ -16,6 +16,9 @@ import SnapKit
 
 public class SubscriptionViewController: UIViewController, SubscribeViewDelegate {
     public var delegate: SubscriptionViewControllerDelegate?
+    public var notNowButtonHidden = false {
+        didSet { subscribeView.notNowButtonHidden = notNowButtonHidden }
+    }
     
     private var subscribeView: SubscribeView
     private lazy var restorePurchasesButton: UIButton = {
