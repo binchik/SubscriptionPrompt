@@ -96,6 +96,7 @@ final class SubscribeView: UIView {
         tableView.separatorColor = .whiteColor()
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: tableViewCellIdentifier)
+        tableView.tableFooterView = UIView(frame: .zero)
         return tableView
     }()
     
@@ -217,9 +218,8 @@ extension SubscribeView: UITableViewDataSource, UITableViewDelegate {
         if indexPath.row == 0 {
             cell.contentView.backgroundColor = .orangeColor()
         } else if !notNowButtonHidden && indexPath.row == subscribeOptionsTexts.count {
-            UIColor.lightTextColor()
-            cell.contentView.backgroundColor = UIColor(red: 230, green: 230, blue: 230, alpha: 1)
-            cell.textLabel?.textColor = .darkTextColor()
+            cell.contentView.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
+            cell.textLabel?.textColor = UIColor(red: 125/255, green: 125/255, blue: 125/255, alpha: 1)
         } else {
             cell.contentView.backgroundColor = UIColor.orangeColor().colorWithAlphaComponent(0.7)
         }
@@ -232,6 +232,7 @@ extension SubscribeView: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         guard let delegate = delegate else { return }
+        tableView .deselectRowAtIndexPath(indexPath, animated: true)
         if indexPath.row < subscribeOptionsTexts.count {
             delegate.rowTapped(atIndex: indexPath.row)
         } else {
