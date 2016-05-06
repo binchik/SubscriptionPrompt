@@ -92,7 +92,8 @@ final class SubscribeView: UIView {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.scrollEnabled = false
-        tableView.separatorStyle = .None
+        tableView.separatorColor = .whiteColor()
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: tableViewCellIdentifier)
         return tableView
     }()
@@ -203,12 +204,23 @@ extension SubscribeView: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(tableViewCellIdentifier)!
-        cell.selectionStyle = .None
-        cell.contentView.backgroundColor = UIColor.orangeColor()
-            .colorWithAlphaComponent(1 / (CGFloat(indexPath.row) + 1) + 0.2)
+        
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = .orangeColor()
+        cell.selectedBackgroundView = backgroundView
+        
         cell.textLabel?.font = .systemFontOfSize(17)
         cell.textLabel?.textColor = .whiteColor()
         cell.textLabel?.textAlignment = .Center
+        
+        if indexPath.row == 0 {
+            cell.contentView.backgroundColor = .orangeColor()
+        } else if !notNowButtonHidden && indexPath.row == subscribeOptionsTexts.count - 1 {
+            cell.contentView.backgroundColor = .lightGrayColor()
+            cell.textLabel?.textColor = .darkGrayColor()
+        } else {
+            cell.contentView.backgroundColor = UIColor.orangeColor().colorWithAlphaComponent(0.7)
+        }
         
         cell.textLabel?.text = indexPath.row < subscribeOptionsTexts.count ?
             subscribeOptionsTexts[indexPath.row] : cancelOptionText
