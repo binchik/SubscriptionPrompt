@@ -75,7 +75,7 @@ final class SubscribeCollectionViewCell: UICollectionViewCell {
             $0.right.equalTo(contentView.snp_right)
         }
         commentLabel.snp_makeConstraints {
-            $0.top.equalTo(imageView.snp_bottom)
+            $0.top.equalTo(imageView.snp_bottom).offset(4)
             $0.left.equalTo(contentView.snp_left).offset(4)
             $0.right.equalTo(contentView.snp_right).offset(-4)
         }
@@ -83,7 +83,7 @@ final class SubscribeCollectionViewCell: UICollectionViewCell {
             $0.top.equalTo(commentLabel.snp_bottom).offset(4)
             $0.left.equalTo(contentView.snp_left).offset(4)
             $0.right.equalTo(contentView.snp_right).offset(-4)
-            $0.bottom.equalTo(contentView.snp_bottom)
+            $0.bottom.equalTo(contentView.snp_bottom).offset(-4)
         }
     }
 }
