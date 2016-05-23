@@ -106,7 +106,7 @@ final class SubscribeView: UIView {
     // MARK: - Init
     
     convenience init(title: String, images: [UIImage], commentTexts: [String], commentSubtitleTexts: [String],
-                     subscribeOptionsTexts: [String], cancelOptionText: String) {
+                     subscribeOptionsTexts: [String], cancelOptionText: String, checkedOptions: [Bool]) {
         self.init(frame: .zero)
         self.title = title
         self.titleLabel.text = title
@@ -115,6 +115,7 @@ final class SubscribeView: UIView {
         self.commentSubtitleTexts = commentSubtitleTexts
         self.subscribeOptionsTexts = subscribeOptionsTexts
         self.cancelOptionText = cancelOptionText
+        self.checkedOpions = checkedOpions
     }
     
     override init(frame: CGRect) {
