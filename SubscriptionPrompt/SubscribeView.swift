@@ -36,6 +36,7 @@ final class SubscribeView: UIView {
             }
         }
     }
+    var checkedOpions = [false, false, false]
     var subscribeOptionsTexts = ["12 MONTHS FOR $4.58/mo", "6 MONTHS FOR $5.83/mo", "1 MONTH FOR $9.99/mo"] {
         didSet { reloadTableView() }
     }
@@ -226,6 +227,8 @@ extension SubscribeView: UITableViewDataSource, UITableViewDelegate {
         
         cell.textLabel?.text = indexPath.row < subscribeOptionsTexts.count ?
             subscribeOptionsTexts[indexPath.row] : cancelOptionText
+        
+        cell.accessoryType = checkedOpions[indexPath.row] ? .Checkmark : .None
         
         return cell
     }
