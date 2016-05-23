@@ -33,13 +33,12 @@ public class SubscriptionViewController: UIViewController, SubscribeViewDelegate
     // MARK: - Init
     
     public init(title: String, images: [UIImage], commentTexts: [String], commentSubtitleTexts: [String],
-                subscribeOptionsTexts: [String], cancelOptionText: String,
-                restoreButtonTitle: String, checkedOptions: [Bool]) {
+                subscribeOptionsTexts: [String], cancelOptionText: String, restoreButtonTitle: String) {
         subscribeView = SubscribeView(title: title, images: images,
                                       commentTexts: commentTexts,
                                       commentSubtitleTexts: commentSubtitleTexts,
                                       subscribeOptionsTexts: subscribeOptionsTexts,
-                                      cancelOptionText: cancelOptionText, checkedOptions: checkedOptions)
+                                      cancelOptionText: cancelOptionText)
         super.init(nibName: nil, bundle: nil)
         
         subscribeView.delegate = self

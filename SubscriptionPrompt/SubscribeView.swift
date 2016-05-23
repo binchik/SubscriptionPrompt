@@ -36,7 +36,6 @@ final class SubscribeView: UIView {
             }
         }
     }
-    var checkedOpions = [false, false, false]
     var subscribeOptionsTexts = ["12 MONTHS FOR $4.58/mo", "6 MONTHS FOR $5.83/mo", "1 MONTH FOR $9.99/mo"] {
         didSet { reloadTableView() }
     }
@@ -106,7 +105,7 @@ final class SubscribeView: UIView {
     // MARK: - Init
     
     convenience init(title: String, images: [UIImage], commentTexts: [String], commentSubtitleTexts: [String],
-                     subscribeOptionsTexts: [String], cancelOptionText: String, checkedOptions: [Bool]) {
+                     subscribeOptionsTexts: [String], cancelOptionText: String) {
         self.init(frame: .zero)
         self.title = title
         self.titleLabel.text = title
@@ -115,7 +114,6 @@ final class SubscribeView: UIView {
         self.commentSubtitleTexts = commentSubtitleTexts
         self.subscribeOptionsTexts = subscribeOptionsTexts
         self.cancelOptionText = cancelOptionText
-        self.checkedOpions = checkedOpions
     }
     
     override init(frame: CGRect) {
@@ -228,8 +226,6 @@ extension SubscribeView: UITableViewDataSource, UITableViewDelegate {
         
         cell.textLabel?.text = indexPath.row < subscribeOptionsTexts.count ?
             subscribeOptionsTexts[indexPath.row] : cancelOptionText
-        
-        cell.accessoryType = checkedOpions[indexPath.row] ? .Checkmark : .None
         
         return cell
     }
