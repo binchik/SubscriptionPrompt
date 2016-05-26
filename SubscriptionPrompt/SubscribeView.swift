@@ -63,6 +63,13 @@ final class SubscribeView: UIView {
             }
         }
     }
+    var checked = [Bool]() {
+        didSet {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.tableView.reloadData()
+            }
+        }
+    }
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -94,7 +101,8 @@ final class SubscribeView: UIView {
         tableView.rowHeight = 55
         tableView.scrollEnabled = false
         tableView.separatorColor = .whiteColor()
-        tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        tableView.separatorInset = UIEdgeInsetsZero
+        tableView.layoutMargins = UIEdgeInsetsZero
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: tableViewCellIdentifier)
         tableView.tableFooterView = UIView(frame: .zero)
         return tableView
@@ -105,7 +113,7 @@ final class SubscribeView: UIView {
     // MARK: - Init
     
     convenience init(title: String, images: [UIImage], commentTexts: [String], commentSubtitleTexts: [String],
-                     subscribeOptionsTexts: [String], cancelOptionText: String) {
+                     subscribeOptionsTexts: [String], cancelOptionText: String, checked: [Bool]) {
         self.init(frame: .zero)
         self.title = title
         self.titleLabel.text = title
@@ -114,6 +122,7 @@ final class SubscribeView: UIView {
         self.commentSubtitleTexts = commentSubtitleTexts
         self.subscribeOptionsTexts = subscribeOptionsTexts
         self.cancelOptionText = cancelOptionText
+        self.checked = checked
     }
     
     override init(frame: CGRect) {
@@ -129,15 +138,15 @@ final class SubscribeView: UIView {
     // MARK: - Public
     
     func animateDraggingToTheRight(duration: NSTimeInterval = 2) {
-        UIView.animateWithDuration(duration / 2, animations: {
+        UIView.animateWithDuration(duration / 2, delay: 0, options: .AllowUserInteraction, animations: {
             self.collectionView.contentOffset = CGPoint(x: 120, y: 0)
             self.layoutIfNeeded()
         }) {
             if !$0 { return }
-            UIView.animateWithDuration(duration / 2) {
+            UIView.animateWithDuration(duration / 2, delay: 0, options: .AllowUserInteraction, animations: {
                 self.collectionView.contentOffset = CGPoint(x: 0, y: 0)
                 self.layoutIfNeeded()
-            }
+                }, completion: nil)
         }
     }
     
@@ -204,6 +213,13 @@ extension SubscribeView: UITableViewDataSource, UITableViewDelegate {
         return subscribeOptionsTexts.count + (notNowButtonHidden ? 0 : 1)
     }
     
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell,
+                   forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.separatorInset = UIEdgeInsetsZero
+        cell.preservesSuperviewLayoutMargins = false
+        cell.layoutMargins = UIEdgeInsetsZero
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(tableViewCellIdentifier)!
         
@@ -216,12 +232,16 @@ extension SubscribeView: UITableViewDataSource, UITableViewDelegate {
         cell.textLabel?.textAlignment = .Center
         
         if indexPath.row == 0 {
-            cell.contentView.backgroundColor = .orangeColor()
+            cell.backgroundColor = .orangeColor()
         } else if !notNowButtonHidden && indexPath.row == subscribeOptionsTexts.count {
-            cell.contentView.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
+            cell.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
             cell.textLabel?.textColor = UIColor(red: 125/255, green: 125/255, blue: 125/255, alpha: 1)
         } else {
-            cell.contentView.backgroundColor = UIColor.orangeColor().colorWithAlphaComponent(0.7)
+            cell.backgroundColor = UIColor.orangeColor().colorWithAlphaComponent(0.7)
+        }
+        
+        if indexPath.row < checked.count && checked[indexPath.row] {
+            cell.accessoryType = .Checkmark
         }
         
         cell.textLabel?.text = indexPath.row < subscribeOptionsTexts.count ?

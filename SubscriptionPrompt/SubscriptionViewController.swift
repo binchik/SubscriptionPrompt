@@ -19,6 +19,11 @@ public class SubscriptionViewController: UIViewController, SubscribeViewDelegate
     public var notNowButtonHidden = false {
         didSet { subscribeView.notNowButtonHidden = notNowButtonHidden }
     }
+    public var checked: [Bool] {
+        didSet {
+            subscribeView.checked = checked
+        }
+    }
     
     private var subscribeView: SubscribeView
     private lazy var restorePurchasesButton: UIButton = {
@@ -33,12 +38,13 @@ public class SubscriptionViewController: UIViewController, SubscribeViewDelegate
     // MARK: - Init
     
     public init(title: String, images: [UIImage], commentTexts: [String], commentSubtitleTexts: [String],
-                subscribeOptionsTexts: [String], cancelOptionText: String, restoreButtonTitle: String) {
+                subscribeOptionsTexts: [String], cancelOptionText: String, restoreButtonTitle: String, checked: [Bool]) {
+        self.checked = checked
         subscribeView = SubscribeView(title: title, images: images,
                                       commentTexts: commentTexts,
                                       commentSubtitleTexts: commentSubtitleTexts,
                                       subscribeOptionsTexts: subscribeOptionsTexts,
-                                      cancelOptionText: cancelOptionText)
+                                      cancelOptionText: cancelOptionText, checked: checked)
         super.init(nibName: nil, bundle: nil)
         
         subscribeView.delegate = self
