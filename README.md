@@ -7,7 +7,9 @@ SubscriptionPrompt is a UIViewController with a carousel at the top and a number
 
 SubscriptionPrompt is available via CocoaPods just write:
 
-`pod 'SubscriptionPrompt'`
+```ruby
+pod 'SubscriptionPrompt'
+```
 
 in your Podfile.
 
@@ -17,7 +19,7 @@ You may alternatively just copy the contents of the SubscriptionPrompt folder in
 
 Just initialize the SubscriptionViewontroller with the following constructor:
 
-```
+```swift
 init(title: String, images: [UIImage], commentTexts: [String], 
       commentSubtitleTexts: [String], subscribeOptionsTexts: [String], 
       cancelOptionText: String)
@@ -27,7 +29,7 @@ and present it.
 
 To get the index of tapped rows, implement the SubscriptionViewControllerDelegate.
 
-```
+```swift
 override func viewDidLoad() {
       super.viewDidLoad()
       subscriptionViewController.delegate = self
