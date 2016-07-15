@@ -15,11 +15,15 @@ import UIKit
 
 public class SubscriptionViewController: UIViewController, SubscribeViewDelegate {
     public var delegate: SubscriptionViewControllerDelegate?
-    public var notNowButtonHidden = false {
-        didSet { subscribeView.notNowButtonHidden = notNowButtonHidden }
+    public var restoreButtonTitle: String? {
+        didSet {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.restorePurchasesButton.setTitle(self.restoreButtonTitle, forState: .Normal)
+            }
+        }
     }
-    public var checked: [Bool] {
-        didSet { subscribeView.checked = checked }
+    public var options: [Option] {
+        didSet { subscribeView.options = options }
     }
     
     private var subscribeView: SubscribeView
@@ -34,18 +38,15 @@ public class SubscriptionViewController: UIViewController, SubscribeViewDelegate
     
     // MARK: - Init
     
-    public init(title: String, images: [UIImage], commentTexts: [String], commentSubtitleTexts: [String],
-                subscribeOptionsTexts: [String], cancelOptionText: String, restoreButtonTitle: String, checked: [Bool]) {
-        self.checked = checked
-        subscribeView = SubscribeView(title: title, images: images,
-                                      commentTexts: commentTexts,
-                                      commentSubtitleTexts: commentSubtitleTexts,
-                                      subscribeOptionsTexts: subscribeOptionsTexts,
-                                      cancelOptionText: cancelOptionText, checked: checked)
+    public init(title: String? = nil, slides: [Slide], options: [Option],
+                cancelMessage: String? = nil, restoreButtonTitle: String? = nil) {
+        self.options = options
+        self.restoreButtonTitle = restoreButtonTitle
+        subscribeView = SubscribeView(title: title, slides: slides,
+                                      options: options, cancelMessage: cancelMessage)
         super.init(nibName: nil, bundle: nil)
         
         subscribeView.delegate = self
-        restorePurchasesButton.setTitle(restoreButtonTitle, forState: .Normal)
         
         definesPresentationContext = true
         providesPresentationContextTransitionStyle = true
@@ -61,7 +62,15 @@ public class SubscriptionViewController: UIViewController, SubscribeViewDelegate
     override public func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(white: 0, alpha: 0.5)
-        [subscribeView, restorePurchasesButton].forEach { self.view.addSubview($0) }
+        
+        var restorePurchasesButtonOptional: UIButton? = restoreButtonTitle != nil ? restorePurchasesButton : nil
+        
+        ([subscribeView, restorePurchasesButtonOptional] as [UIView?])
+            .flatMap { $0 }
+            .forEach {
+                $0.translatesAutoresizingMaskIntoConstraints = false
+                self.view.addSubview($0)
+        }
         setUpConstraints()
     }
     
@@ -76,35 +85,28 @@ public class SubscriptionViewController: UIViewController, SubscribeViewDelegate
     private func setUpConstraints() {
         [
             NSLayoutConstraint(item: subscribeView, attribute: .Top,
-                           relatedBy: .Equal, toItem: view,
-                           attribute: .Top, multiplier: 1,
-                           constant: 40),
+                relatedBy: .Equal, toItem: view, attribute: .Top,
+                multiplier: 1, constant: 40),
             NSLayoutConstraint(item: subscribeView, attribute: .Leading,
-                               relatedBy: .Equal, toItem: view,
-                               attribute: .Leading, multiplier: 1,
-                               constant: 20),
+                relatedBy: .Equal, toItem: view, attribute: .Leading,
+                multiplier: 1, constant: 20),
             NSLayoutConstraint(item: subscribeView, attribute: .Trailing,
-                               relatedBy: .Equal, toItem: view,
-                               attribute: .Trailing, multiplier: 1,
-                               constant: -20),
+                relatedBy: .Equal, toItem: view, attribute: .Trailing,
+                multiplier: 1, constant: -20),
             
             NSLayoutConstraint(item: restorePurchasesButton, attribute: .Top,
-                               relatedBy: .Equal, toItem: subscribeView,
-                               attribute: .Bottom, multiplier: 1,
-                               constant: 20),
+                relatedBy: .Equal, toItem: subscribeView, attribute: .Bottom,
+                multiplier: 1, constant: 20),
             NSLayoutConstraint(item: restorePurchasesButton, attribute: .Leading,
-                               relatedBy: .Equal, toItem: view,
-                               attribute: .Leading, multiplier: 1,
-                               constant: 8),
+                relatedBy: .Equal, toItem: view, attribute: .Leading,
+                multiplier: 1, constant: 8),
             NSLayoutConstraint(item: restorePurchasesButton, attribute: .Trailing,
-                               relatedBy: .Equal, toItem: view,
-                               attribute: .Trailing, multiplier: 1,
-                               constant: -8),
+                relatedBy: .Equal, toItem: view, attribute: .Trailing,
+                multiplier: 1, constant: -8),
             NSLayoutConstraint(item: restorePurchasesButton, attribute: .Bottom,
-                               relatedBy: .Equal, toItem: view,
-                               attribute: .Bottom, multiplier: 1,
-            constant: -10)
-        ].forEach { $0.active = true }
+                relatedBy: .Equal, toItem: view, attribute: .Bottom,
+                multiplier: 1, constant: -10)
+            ].forEach { $0.active = true }
     }
     
     func restoreButtonTapped() {

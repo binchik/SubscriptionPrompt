@@ -12,6 +12,8 @@
 		3A40F6DE1CD8D8D70078FA11 /* SubscribeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A40F6DC1CD8D8D70078FA11 /* SubscribeView.swift */; };
 		3A40F6DF1CD8D8D70078FA11 /* SubscribeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A40F6DD1CD8D8D70078FA11 /* SubscribeCollectionViewCell.swift */; };
 		3A40F6E11CD8D8E00078FA11 /* SubscriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A40F6E01CD8D8E00078FA11 /* SubscriptionViewController.swift */; };
+		3A9CD97B1D38E1320023EE30 /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9CD97A1D38E1320023EE30 /* Option.swift */; };
+		3A9CD97D1D38E13E0023EE30 /* Slide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9CD97C1D38E13E0023EE30 /* Slide.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +34,8 @@
 		3A40F6DC1CD8D8D70078FA11 /* SubscribeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscribeView.swift; sourceTree = "<group>"; };
 		3A40F6DD1CD8D8D70078FA11 /* SubscribeCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscribeCollectionViewCell.swift; sourceTree = "<group>"; };
 		3A40F6E01CD8D8E00078FA11 /* SubscriptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionViewController.swift; sourceTree = "<group>"; };
+		3A9CD97A1D38E1320023EE30 /* Option.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Option.swift; sourceTree = "<group>"; };
+		3A9CD97C1D38E13E0023EE30 /* Slide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Slide.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,12 +78,30 @@
 			isa = PBXGroup;
 			children = (
 				3A40F6E01CD8D8E00078FA11 /* SubscriptionViewController.swift */,
-				3A40F6DC1CD8D8D70078FA11 /* SubscribeView.swift */,
-				3A40F6DD1CD8D8D70078FA11 /* SubscribeCollectionViewCell.swift */,
+				3A9CD9791D38E11D0023EE30 /* Models */,
+				3A9CD9781D38E1160023EE30 /* Views */,
 				3A40F6AB1CD8D33A0078FA11 /* SubscriptionPrompt.h */,
 				3A40F6AD1CD8D33A0078FA11 /* Info.plist */,
 			);
 			path = SubscriptionPrompt;
+			sourceTree = "<group>";
+		};
+		3A9CD9781D38E1160023EE30 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3A40F6DC1CD8D8D70078FA11 /* SubscribeView.swift */,
+				3A40F6DD1CD8D8D70078FA11 /* SubscribeCollectionViewCell.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		3A9CD9791D38E11D0023EE30 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3A9CD97A1D38E1320023EE30 /* Option.swift */,
+				3A9CD97C1D38E13E0023EE30 /* Slide.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -190,9 +212,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A9CD97B1D38E1320023EE30 /* Option.swift in Sources */,
 				3A40F6E11CD8D8E00078FA11 /* SubscriptionViewController.swift in Sources */,
 				3A40F6DE1CD8D8D70078FA11 /* SubscribeView.swift in Sources */,
 				3A40F6DF1CD8D8D70078FA11 /* SubscribeCollectionViewCell.swift in Sources */,
+				3A9CD97D1D38E13E0023EE30 /* Slide.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

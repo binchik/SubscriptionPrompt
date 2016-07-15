@@ -54,8 +54,10 @@ final class SubscribeCollectionViewCell: UICollectionViewCell {
     private func setUpViews() {
         backgroundColor = .whiteColor()
         contentView.backgroundColor = .whiteColor()
-        [imageView, commentLabel, commentSubtitleLabel]
-            .forEach { self.contentView.addSubview($0) }
+        [imageView, commentLabel, commentSubtitleLabel].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            self.contentView.addSubview($0)
+        }
     }
     
     private func setUpConstraints() {
@@ -102,6 +104,6 @@ final class SubscribeCollectionViewCell: UICollectionViewCell {
                 relatedBy: .Equal, toItem: contentView,
                 attribute: .Bottom, multiplier: 1,
                 constant: -4)
-        ].forEach { $0.active = true }
+            ].forEach { $0.active = true }
     }
 }

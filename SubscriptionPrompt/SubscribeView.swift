@@ -24,50 +24,26 @@ extension SubscribeViewDelegate where Self: UIViewController {
 
 final class SubscribeView: UIView {
     var delegate: SubscribeViewDelegate?
-    var notNowButtonHidden = false {
-        didSet { self.reloadTableView() }
-    }
     
-    var title = "Get [App Name] Plus" {
+    var title: String? {
         didSet {
             dispatch_async(dispatch_get_main_queue()) {
                 self.titleLabel.text = self.title
             }
         }
     }
-    var subscribeOptionsTexts = ["12 MONTHS FOR $4.58/mo", "6 MONTHS FOR $5.83/mo", "1 MONTH FOR $9.99/mo"] {
+    var slides: [Slide]? {
+        didSet {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.collectionView.reloadData()
+            }
+        }
+    }
+    var options: [Option]? {
         didSet { reloadTableView() }
     }
-    var cancelOptionText = "CANCEL" {
+    var cancelMessage: String? {
         didSet { reloadTableView() }
-    }
-    var images = [UIImage]() {
-        didSet {
-            dispatch_async(dispatch_get_main_queue()) {
-                self.collectionView.reloadData()
-            }
-        }
-    }
-    var commentTexts = [String]() {
-        didSet {
-            dispatch_async(dispatch_get_main_queue()) {
-                self.collectionView.reloadData()
-            }
-        }
-    }
-    var commentSubtitleTexts = [String]() {
-        didSet {
-            dispatch_async(dispatch_get_main_queue()) {
-                self.collectionView.reloadData()
-            }
-        }
-    }
-    var checked = [Bool]() {
-        didSet {
-            dispatch_async(dispatch_get_main_queue()) {
-                self.tableView.reloadData()
-            }
-        }
     }
     
     private lazy var titleLabel: UILabel = {
@@ -108,32 +84,28 @@ final class SubscribeView: UIView {
     }()
     
     private var tableViewHeightConstraint: NSLayoutConstraint?
+    private var notNowButtonHidden: Bool {
+        return cancelMessage == nil
+    }
     
     // MARK: - Init
     
-    convenience init(title: String, images: [UIImage], commentTexts: [String], commentSubtitleTexts: [String],
-                     subscribeOptionsTexts: [String], cancelOptionText: String, checked: [Bool]) {
+    convenience init(title: String?, slides: [Slide], options: [Option], cancelMessage: String?) {
         self.init(frame: .zero)
         self.title = title
-        self.titleLabel.text = title
-        self.images = images
-        self.commentTexts = commentTexts
-        self.commentSubtitleTexts = commentSubtitleTexts
-        self.subscribeOptionsTexts = subscribeOptionsTexts
-        self.cancelOptionText = cancelOptionText
-        self.checked = checked
+        self.slides = slides
+        self.options = options
+        self.cancelMessage = cancelMessage
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setUpViews()
-        setUpConstraints()
+        setUp()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setUpViews()
-        setUpConstraints()
+        setUp()
     }
     
     // MARK: - Public
@@ -153,15 +125,24 @@ final class SubscribeView: UIView {
     
     // MARK: - Private
     
+    private func setUp() {
+        setUpViews()
+        setUpConstraints()
+        reloadTableView()
+    }
+    
     private func setUpViews() {
         backgroundColor = .whiteColor()
         layer.masksToBounds = true
         layer.cornerRadius = 10
         
-        [titleLabel, collectionView, tableView].forEach { self.addSubview($0) }
+        [titleLabel, collectionView, tableView].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            self.addSubview($0)
+        }
         collectionView.reloadData()
-        tableView.reloadData()
-        setNeedsUpdateConstraints()
+        
+        titleLabel.text = title
     }
     
     private func setUpConstraints() {
@@ -179,9 +160,9 @@ final class SubscribeView: UIView {
                 relatedBy: .Equal, toItem: self,
                 attribute: .Leading, multiplier: 1,
                 constant: 0),
-            NSLayoutConstraint(item: titleLabel, attribute: .Top,
+            NSLayoutConstraint(item: titleLabel, attribute: .Trailing,
                 relatedBy: .Equal, toItem: self,
-                attribute: .Leading, multiplier: 1,
+                attribute: .Trailing, multiplier: 1,
                 constant: 0),
             
             NSLayoutConstraint(item: collectionView, attribute: .Top,
@@ -192,9 +173,9 @@ final class SubscribeView: UIView {
                 relatedBy: .Equal, toItem: self,
                 attribute: .Leading, multiplier: 1,
                 constant: 0),
-            NSLayoutConstraint(item: collectionView, attribute: .Top,
+            NSLayoutConstraint(item: collectionView, attribute: .Trailing,
                 relatedBy: .Equal, toItem: self,
-                attribute: .Leading, multiplier: 1,
+                attribute: .Trailing, multiplier: 1,
                 constant: 0),
             
             NSLayoutConstraint(item: tableView, attribute: .Top,
@@ -205,22 +186,24 @@ final class SubscribeView: UIView {
                 relatedBy: .Equal, toItem: self,
                 attribute: .Leading, multiplier: 1,
                 constant: 0),
-            NSLayoutConstraint(item: tableView, attribute: .Top,
+            NSLayoutConstraint(item: tableView, attribute: .Trailing,
                 relatedBy: .Equal, toItem: self,
-                attribute: .Leading, multiplier: 1,
+                attribute: .Trailing, multiplier: 1,
                 constant: 0),
             NSLayoutConstraint(item: tableView, attribute: .Bottom,
                 relatedBy: .Equal, toItem: self,
                 attribute: .Bottom, multiplier: 1,
                 constant: 0),
             tableViewHeightConstraint
-        ].flatMap{ $0 }.forEach { $0.active = true }
+            ].flatMap{ $0 }.forEach { $0.active = true }
     }
     
     private func reloadTableView() {
         dispatch_async(dispatch_get_main_queue()) {
             self.tableView.reloadData()
             self.tableViewHeightConstraint?.constant = self.tableView.contentSize.height
+            self.tableView.setNeedsUpdateConstraints()
+            self.layoutIfNeeded()
         }
     }
     
@@ -237,7 +220,7 @@ final class SubscribeView: UIView {
 
 extension SubscribeView: UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return subscribeOptionsTexts.count + (notNowButtonHidden ? 0 : 1)
+        return (options?.count ?? 0) + (notNowButtonHidden ? 0 : 1)
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell,
@@ -260,19 +243,20 @@ extension SubscribeView: UITableViewDataSource, UITableViewDelegate {
         
         if indexPath.row == 0 {
             cell.backgroundColor = .orangeColor()
-        } else if !notNowButtonHidden && indexPath.row == subscribeOptionsTexts.count {
+        } else if !notNowButtonHidden && indexPath.row == (options?.count ?? 0) {
             cell.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
             cell.textLabel?.textColor = UIColor(red: 125/255, green: 125/255, blue: 125/255, alpha: 1)
+            cell.textLabel?.text = cancelMessage
         } else {
             cell.backgroundColor = UIColor.orangeColor().colorWithAlphaComponent(0.7)
         }
         
-        if indexPath.row < checked.count && checked[indexPath.row] {
-            cell.accessoryType = .Checkmark
-        }
+        if indexPath.row >= (options?.count ?? 0) { return cell }
         
-        cell.textLabel?.text = indexPath.row < subscribeOptionsTexts.count ?
-            subscribeOptionsTexts[indexPath.row] : cancelOptionText
+        if let option = options?[indexPath.row] {
+            if option.checked { cell.accessoryType = .Checkmark }
+            cell.textLabel?.text = option.title
+        }
         
         return cell
     }
@@ -280,7 +264,7 @@ extension SubscribeView: UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         guard let delegate = delegate else { return }
         tableView .deselectRowAtIndexPath(indexPath, animated: true)
-        if indexPath.row < subscribeOptionsTexts.count {
+        if indexPath.row < options?.count {
             delegate.rowTapped(atIndex: indexPath.row)
         } else {
             if !notNowButtonHidden { delegate.dismissButtonTouched() }
@@ -292,15 +276,19 @@ extension SubscribeView: UITableViewDataSource, UITableViewDelegate {
 
 extension SubscribeView: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return images.count
+        return slides?.count ?? 0
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(
             collectionViewCellIdentifier, forIndexPath: indexPath) as! SubscribeCollectionViewCell
-        cell.imageView.image = images[indexPath.row]
-        cell.commentLabel.text = commentTexts[indexPath.row]
-        cell.commentSubtitleLabel.text = commentSubtitleTexts[indexPath.row]
+        
+        if let slide = slides?[indexPath.row] {
+            cell.imageView.image = slide.image
+            cell.commentLabel.text = slide.title
+            cell.commentSubtitleLabel.text = slide.subtitle
+        }
+        
         return cell
     }
 }
