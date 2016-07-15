@@ -1,13 +1,12 @@
 //
 //  SubscribeViewController.swift
-//  KanjiNinja
+//  SubscriptionPrompt
 //
-//  Created by Zhanserik on 4/28/16.
-//  Copyright © 2016 Tom. All rights reserved.
+//  Created by Binur Konarbayev on 5/3/16.
+//  Copyright © 2016 binchik. All rights reserved.
 //
 
 import UIKit
-import SnapKit
 
 @objc public protocol SubscriptionViewControllerDelegate {
     func subscriptionViewControllerRowTapped(atIndex index: Int)
@@ -20,9 +19,7 @@ public class SubscriptionViewController: UIViewController, SubscribeViewDelegate
         didSet { subscribeView.notNowButtonHidden = notNowButtonHidden }
     }
     public var checked: [Bool] {
-        didSet {
-            subscribeView.checked = checked
-        }
+        didSet { subscribeView.checked = checked }
     }
     
     private var subscribeView: SubscribeView
@@ -65,28 +62,7 @@ public class SubscriptionViewController: UIViewController, SubscribeViewDelegate
         super.viewDidLoad()
         view.backgroundColor = UIColor(white: 0, alpha: 0.5)
         [subscribeView, restorePurchasesButton].forEach { self.view.addSubview($0) }
-        view.setNeedsUpdateConstraints()
-    }
-    
-    // MARK: - UIView
-    
-    override public func updateViewConstraints() {
-        super.updateViewConstraints()
-        
-        if constraintsSetUp { return }
-        constraintsSetUp = true
-        
-        subscribeView.snp_makeConstraints {
-            $0.left.equalTo(view.snp_left).offset(20)
-            $0.right.equalTo(view.snp_right).offset(-20)
-            $0.top.equalTo(view.snp_top).offset(40)
-        }
-        restorePurchasesButton.snp_makeConstraints {
-            $0.left.equalTo(view.snp_left).offset(8)
-            $0.right.equalTo(view.snp_right).offset(-8)
-            $0.top.equalTo(subscribeView.snp_bottom).offset(20)
-            $0.bottom.equalTo(view.snp_bottom).offset(-10)
-        }
+        setUpConstraints()
     }
     
     // MARK: - Public
@@ -96,6 +72,40 @@ public class SubscriptionViewController: UIViewController, SubscribeViewDelegate
     }
     
     // MARK: - Private
+    
+    private func setUpConstraints() {
+        [
+            NSLayoutConstraint(item: subscribeView, attribute: .Top,
+                           relatedBy: .Equal, toItem: view,
+                           attribute: .Top, multiplier: 1,
+                           constant: 40),
+            NSLayoutConstraint(item: subscribeView, attribute: .Leading,
+                               relatedBy: .Equal, toItem: view,
+                               attribute: .Leading, multiplier: 1,
+                               constant: 20),
+            NSLayoutConstraint(item: subscribeView, attribute: .Trailing,
+                               relatedBy: .Equal, toItem: view,
+                               attribute: .Trailing, multiplier: 1,
+                               constant: -20),
+            
+            NSLayoutConstraint(item: restorePurchasesButton, attribute: .Top,
+                               relatedBy: .Equal, toItem: subscribeView,
+                               attribute: .Bottom, multiplier: 1,
+                               constant: 20),
+            NSLayoutConstraint(item: restorePurchasesButton, attribute: .Leading,
+                               relatedBy: .Equal, toItem: view,
+                               attribute: .Leading, multiplier: 1,
+                               constant: 8),
+            NSLayoutConstraint(item: restorePurchasesButton, attribute: .Trailing,
+                               relatedBy: .Equal, toItem: view,
+                               attribute: .Trailing, multiplier: 1,
+                               constant: -8),
+            NSLayoutConstraint(item: restorePurchasesButton, attribute: .Bottom,
+                               relatedBy: .Equal, toItem: view,
+                               attribute: .Bottom, multiplier: 1,
+            constant: -10)
+        ].forEach { $0.active = true }
+    }
     
     func restoreButtonTapped() {
         guard let delegate = delegate else { return }

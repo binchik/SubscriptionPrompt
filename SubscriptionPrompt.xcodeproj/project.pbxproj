@@ -9,13 +9,9 @@
 /* Begin PBXBuildFile section */
 		3A40F6AC1CD8D33A0078FA11 /* SubscriptionPrompt.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A40F6AB1CD8D33A0078FA11 /* SubscriptionPrompt.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A40F6B31CD8D33B0078FA11 /* SubscriptionPrompt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A40F6A81CD8D33A0078FA11 /* SubscriptionPrompt.framework */; };
-		3A40F6B81CD8D33B0078FA11 /* SubscriptionPromptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A40F6B71CD8D33B0078FA11 /* SubscriptionPromptTests.swift */; };
-		3A40F6D81CD8D76C0078FA11 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A40F6D71CD8D76C0078FA11 /* Nimble.framework */; };
-		3A40F6DA1CD8D76F0078FA11 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A40F6D91CD8D76F0078FA11 /* Quick.framework */; };
 		3A40F6DE1CD8D8D70078FA11 /* SubscribeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A40F6DC1CD8D8D70078FA11 /* SubscribeView.swift */; };
 		3A40F6DF1CD8D8D70078FA11 /* SubscribeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A40F6DD1CD8D8D70078FA11 /* SubscribeCollectionViewCell.swift */; };
 		3A40F6E11CD8D8E00078FA11 /* SubscriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A40F6E01CD8D8E00078FA11 /* SubscriptionViewController.swift */; };
-		3A40F6E51CD8DA9F0078FA11 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A40F6E41CD8DA9F0078FA11 /* SnapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,15 +29,9 @@
 		3A40F6AB1CD8D33A0078FA11 /* SubscriptionPrompt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SubscriptionPrompt.h; sourceTree = "<group>"; };
 		3A40F6AD1CD8D33A0078FA11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3A40F6B21CD8D33B0078FA11 /* SubscriptionPromptTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SubscriptionPromptTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3A40F6B71CD8D33B0078FA11 /* SubscriptionPromptTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPromptTests.swift; sourceTree = "<group>"; };
-		3A40F6B91CD8D33B0078FA11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3A40F6D71CD8D76C0078FA11 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = "Carthage/Checkouts/Nimble/build/Debug-iphoneos/Nimble.framework"; sourceTree = "<group>"; };
-		3A40F6D91CD8D76F0078FA11 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Checkouts/Quick/build/Debug/Quick.framework; sourceTree = "<group>"; };
 		3A40F6DC1CD8D8D70078FA11 /* SubscribeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscribeView.swift; sourceTree = "<group>"; };
 		3A40F6DD1CD8D8D70078FA11 /* SubscribeCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscribeCollectionViewCell.swift; sourceTree = "<group>"; };
 		3A40F6E01CD8D8E00078FA11 /* SubscriptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionViewController.swift; sourceTree = "<group>"; };
-		3A40F6E21CD8DA970078FA11 /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = "Carthage/Checkouts/SnapKit/build/Debug-iphoneos/SnapKit.framework"; sourceTree = "<group>"; };
-		3A40F6E41CD8DA9F0078FA11 /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = "Carthage/Checkouts/SnapKit/build/Debug-iphoneos/SnapKit.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,7 +39,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A40F6E51CD8DA9F0078FA11 /* SnapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,8 +46,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A40F6DA1CD8D76F0078FA11 /* Quick.framework in Frameworks */,
-				3A40F6D81CD8D76C0078FA11 /* Nimble.framework in Frameworks */,
 				3A40F6B31CD8D33B0078FA11 /* SubscriptionPrompt.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -69,9 +56,7 @@
 		3A40F69E1CD8D33A0078FA11 = {
 			isa = PBXGroup;
 			children = (
-				3A40F6DB1CD8D7DF0078FA11 /* Frameworks */,
 				3A40F6AA1CD8D33A0078FA11 /* SubscriptionPrompt */,
-				3A40F6B61CD8D33B0078FA11 /* SubscriptionPromptTests */,
 				3A40F6A91CD8D33A0078FA11 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -95,26 +80,6 @@
 				3A40F6AD1CD8D33A0078FA11 /* Info.plist */,
 			);
 			path = SubscriptionPrompt;
-			sourceTree = "<group>";
-		};
-		3A40F6B61CD8D33B0078FA11 /* SubscriptionPromptTests */ = {
-			isa = PBXGroup;
-			children = (
-				3A40F6B71CD8D33B0078FA11 /* SubscriptionPromptTests.swift */,
-				3A40F6B91CD8D33B0078FA11 /* Info.plist */,
-			);
-			path = SubscriptionPromptTests;
-			sourceTree = "<group>";
-		};
-		3A40F6DB1CD8D7DF0078FA11 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				3A40F6E41CD8DA9F0078FA11 /* SnapKit.framework */,
-				3A40F6E21CD8DA970078FA11 /* SnapKit.framework */,
-				3A40F6D91CD8D76F0078FA11 /* Quick.framework */,
-				3A40F6D71CD8D76C0078FA11 /* Nimble.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -235,7 +200,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A40F6B81CD8D33B0078FA11 /* SubscriptionPromptTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

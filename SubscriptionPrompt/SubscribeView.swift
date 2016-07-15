@@ -1,13 +1,12 @@
 //
 //  SubscribeView.swift
-//  KanjiNinja
+//  SubscriptionPrompt
 //
-//  Created by Zhanserik on 4/28/16.
-//  Copyright © 2016 Tom. All rights reserved.
+//  Created by Binur Konarbayev on 4/28/16.
+//  Copyright © 2016 binchik. All rights reserved.
 //
 
 import UIKit
-import SnapKit
 
 private let collectionViewCellIdentifier = "collectionViewCellIdentifier"
 private let tableViewCellIdentifier = "identifier"
@@ -108,7 +107,7 @@ final class SubscribeView: UIView {
         return tableView
     }()
     
-    private var constraintsSetUp = false
+    private var tableViewHeightConstraint: NSLayoutConstraint?
     
     // MARK: - Init
     
@@ -127,12 +126,14 @@ final class SubscribeView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupViews()
+        setUpViews()
+        setUpConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setupViews()
+        setUpViews()
+        setUpConstraints()
     }
     
     // MARK: - Public
@@ -152,7 +153,7 @@ final class SubscribeView: UIView {
     
     // MARK: - Private
     
-    private func setupViews() {
+    private func setUpViews() {
         backgroundColor = .whiteColor()
         layer.masksToBounds = true
         layer.cornerRadius = 10
@@ -163,41 +164,67 @@ final class SubscribeView: UIView {
         setNeedsUpdateConstraints()
     }
     
+    private func setUpConstraints() {
+        tableViewHeightConstraint = NSLayoutConstraint(item: tableView, attribute: .Height,
+                                                       relatedBy: .Equal, toItem: nil,
+                                                       attribute: .NotAnAttribute, multiplier: 1,
+                                                       constant: tableView.contentSize.height)
+        
+        [
+            NSLayoutConstraint(item: titleLabel, attribute: .Top,
+                relatedBy: .Equal, toItem: self,
+                attribute: .Top, multiplier: 1,
+                constant: 16),
+            NSLayoutConstraint(item: titleLabel, attribute: .Leading,
+                relatedBy: .Equal, toItem: self,
+                attribute: .Leading, multiplier: 1,
+                constant: 0),
+            NSLayoutConstraint(item: titleLabel, attribute: .Top,
+                relatedBy: .Equal, toItem: self,
+                attribute: .Leading, multiplier: 1,
+                constant: 0),
+            
+            NSLayoutConstraint(item: collectionView, attribute: .Top,
+                relatedBy: .Equal, toItem: titleLabel,
+                attribute: .Bottom, multiplier: 1,
+                constant: 0),
+            NSLayoutConstraint(item: collectionView, attribute: .Leading,
+                relatedBy: .Equal, toItem: self,
+                attribute: .Leading, multiplier: 1,
+                constant: 0),
+            NSLayoutConstraint(item: collectionView, attribute: .Top,
+                relatedBy: .Equal, toItem: self,
+                attribute: .Leading, multiplier: 1,
+                constant: 0),
+            
+            NSLayoutConstraint(item: tableView, attribute: .Top,
+                relatedBy: .Equal, toItem: collectionView,
+                attribute: .Bottom, multiplier: 1,
+                constant: 0),
+            NSLayoutConstraint(item: tableView, attribute: .Leading,
+                relatedBy: .Equal, toItem: self,
+                attribute: .Leading, multiplier: 1,
+                constant: 0),
+            NSLayoutConstraint(item: tableView, attribute: .Top,
+                relatedBy: .Equal, toItem: self,
+                attribute: .Leading, multiplier: 1,
+                constant: 0),
+            NSLayoutConstraint(item: tableView, attribute: .Bottom,
+                relatedBy: .Equal, toItem: self,
+                attribute: .Bottom, multiplier: 1,
+                constant: 0),
+            tableViewHeightConstraint
+        ].flatMap{ $0 }.forEach { $0.active = true }
+    }
+    
     private func reloadTableView() {
         dispatch_async(dispatch_get_main_queue()) {
             self.tableView.reloadData()
-            self.tableView.snp_updateConstraints {
-                $0.height.equalTo(self.tableView.contentSize.height)
-            }
+            self.tableViewHeightConstraint?.constant = self.tableView.contentSize.height
         }
     }
     
     // MARK: - UIView
-    
-    override func updateConstraints() {
-        super.updateConstraints()
-        
-        if constraintsSetUp { return }
-        constraintsSetUp = true
-        
-        titleLabel.snp_makeConstraints {
-            $0.left.equalTo(snp_left)
-            $0.right.equalTo(snp_right)
-            $0.top.equalTo(snp_top).offset(16)
-        }
-        collectionView.snp_makeConstraints {
-            $0.left.equalTo(snp_left)
-            $0.right.equalTo(snp_right)
-            $0.top.equalTo(titleLabel.snp_bottom)
-        }
-        tableView.snp_makeConstraints {
-            $0.left.equalTo(snp_left)
-            $0.right.equalTo(snp_right)
-            $0.top.equalTo(collectionView.snp_bottom)
-            $0.bottom.equalTo(snp_bottom)
-            $0.height.equalTo(tableView.contentSize.height)
-        }
-    }
     
     override func layoutSubviews() {
         super.layoutSubviews()

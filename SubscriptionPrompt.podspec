@@ -11,6 +11,4 @@ Pod::Spec.new do |spec|
   spec.requires_arc = true
   spec.source = { git: "https://github.com/Binur/SubscriptionPrompt.git", tag: "#{spec.version}", submodules: true }
   spec.source_files = "SubscriptionPrompt/**/*.{h,swift}"
-
-  spec.dependency "SnapKit", "~> 0.20"
 end
