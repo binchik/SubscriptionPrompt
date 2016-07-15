@@ -5,15 +5,25 @@ SubscriptionPrompt is a UIViewController with a carousel at the top and a number
 
 # Installation
 
-SubscriptionPrompt is available via CocoaPods just write:
+#### CocoaPods
+You can use [CocoaPods](http://cocoapods.org/) to install `SubscriptionPrompt` by adding it to your `Podfile`:
 
 ```ruby
+platform :ios, '8.0'
+use_frameworks!
 pod 'SubscriptionPrompt'
 ```
 
-in your Podfile.
+To get the full benefits import `SubscriptionPrompt` wherever you import UIKit
 
-You may alternatively just copy the contents of the SubscriptionPrompt folder into your project.
+``` swift
+import UIKit
+import SubscriptionPrompt
+```
+
+#### Manually
+1. Download and drop ```/SubscriptionPrompt```folder in your project.  
+2. Congratulations!  
 
 # Usage
 
