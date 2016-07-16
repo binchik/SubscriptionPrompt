@@ -57,13 +57,14 @@ func subscriptionViewControllerRowTapped(atIndex index: Int) {
 }
 ```
 
-`animateDraggingToTheRight(duration:)` - animates a little drag to the right and back with the given duration [ux hint for the user that the carousel is draggable]
+`animateDraggingToTheRight(duration:)` - animates a little drag to the right and back with the given duration 
+[ux hint for the user that the carousel is draggable]
 
 # TODO
 
 1. Fonts customizations.
 2. Colors customziations.
-3. Add closures instead of delegates. Example:
+3. Add closure-based delegation API. Example:
 
 ```swift
 subscriptionVC.rowTapped { idx in
