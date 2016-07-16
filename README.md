@@ -60,11 +60,40 @@ func subscriptionViewControllerRowTapped(atIndex index: Int) {
 `animateDraggingToTheRight(duration:)` - animates a little drag to the right and back with the given duration 
 [ux hint for the user that the carousel is draggable]
 
+# Styles customization
+
+Set `stylingDelegate: SubscriptionViewControllerStylingDelegate` to customize styles. 
+There are three optional methods:
+
+```swift
+optional func subscriptionViewControllerSlideStyle(atIndex index: Int) -> SlideStyle
+optional func subscriptionViewControllerOptionStyle(atIndex index: Int) -> OptionStyle
+optional func subscriptionViewControllerNotNowButtonStyle() -> OptionStyle
+```
+
+The methods return `OptionStyle` and `SlideStyle`. They represent the looks of the subscription options at the bottom and of the slides at the top.
+
+Use the following init for `OptionStyle`:
+
+```swift
+init(backgroundColor: UIColor? = nil, textFont: UIFont? = nil,
+	textColor: UIColor? = nil, accessoryType: UITableViewCellAccessoryType? = nil)
+}
+```
+
+and for `SlideStyle`:
+
+```swift
+init(backgroundColor: UIColor? = nil, titleFont: UIFont? = nil,
+	subtitleFont: UIFont? = nil, titleColor: UIColor? = nil, 
+	subtitleColor: UIColor? = nil)
+}
+```
+
 # TODO
 
-1. Fonts customizations.
-2. Colors customziations.
-3. Add closure-based delegation API. Example:
+1. Bug fixes.
+2. Add closure-based delegation API. Example:
 
 ```swift
 subscriptionVC.rowTapped { idx in
