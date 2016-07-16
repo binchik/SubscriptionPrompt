@@ -13,8 +13,61 @@ import UIKit
     func restoreButtonTapped()
 }
 
-public class SubscriptionViewController: UIViewController, SubscribeViewDelegate {
+@objc public protocol SubscriptionViewControllerStylingDelegate {
+    optional func subscriptionViewControllerSlideStyle(atIndex index: Int) -> SlideStyle
+    optional func subscriptionViewControllerOptionStyle(atIndex index: Int) -> OptionStyle
+    optional func subscriptionViewControllerNotNowButtonStyle() -> OptionStyle
+}
+
+public final class SubscriptionViewController: UIViewController, SubscribeViewDelegate {
+    // MARK: - Styling
+    
+    public var dimColor: UIColor = UIColor(white: 0, alpha: 0.5) {
+        didSet {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.view.backgroundColor = self.dimColor
+            }
+        }
+    }
+    
+    public var dimView: UIView? {
+        didSet {
+            guard let dimView = dimView else { return }
+            dimView.translatesAutoresizingMaskIntoConstraints = false
+            dispatch_async(dispatch_get_main_queue()) {
+                oldValue?.removeFromSuperview()
+                self.view.insertSubview(dimView, belowSubview: self.subscribeView)
+                [
+                    NSLayoutConstraint(item: dimView, attribute: .Leading,
+                        relatedBy: .Equal, toItem: self.view, attribute: .Leading,
+                        multiplier: 1, constant: 0),
+                    NSLayoutConstraint(item: dimView, attribute: .Trailing,
+                        relatedBy: .Equal, toItem: self.view, attribute: .Trailing,
+                        multiplier: 1, constant: 0),
+                    NSLayoutConstraint(item: dimView, attribute: .Top,
+                        relatedBy: .Equal, toItem: self.view, attribute: .Top,
+                        multiplier: 1, constant: 0),
+                    NSLayoutConstraint(item: dimView, attribute: .Bottom,
+                        relatedBy: .Equal, toItem: self.view, attribute: .Bottom,
+                        multiplier: 1, constant: 0)
+                    ].forEach { $0.active = true }
+            }
+        }
+    }
+    
+    public var titleFont: UIFont? {
+        didSet { self.subscribeView.titleFont = titleFont }
+    }
+    public var titleColor: UIColor? {
+        didSet { self.subscribeView.titleColor = titleColor }
+    }
+    
+    // MARK: - Styling END
+    
     public var delegate: SubscriptionViewControllerDelegate?
+    public var stylingDelegate: SubscriptionViewControllerStylingDelegate? {
+        didSet { self.subscribeView.stylingDelegate = stylingDelegate }
+    }
     public var restoreButtonTitle: String? {
         didSet {
             dispatch_async(dispatch_get_main_queue()) {
@@ -110,14 +163,12 @@ public class SubscriptionViewController: UIViewController, SubscribeViewDelegate
     }
     
     func restoreButtonTapped() {
-        guard let delegate = delegate else { return }
-        delegate.restoreButtonTapped()
+        delegate?.restoreButtonTapped()
     }
     
     // MARK: - SubscriptionViewDelegate
     
     func rowTapped(atIndex index: Int) {
-        guard let delegate = delegate else { return }
-        delegate.subscriptionViewControllerRowTapped(atIndex: index)
+        delegate?.subscriptionViewControllerRowTapped(atIndex: index)
     }
 }

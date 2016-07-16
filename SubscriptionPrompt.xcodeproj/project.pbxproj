@@ -10,10 +10,13 @@
 		3A40F6AC1CD8D33A0078FA11 /* SubscriptionPrompt.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A40F6AB1CD8D33A0078FA11 /* SubscriptionPrompt.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A40F6B31CD8D33B0078FA11 /* SubscriptionPrompt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A40F6A81CD8D33A0078FA11 /* SubscriptionPrompt.framework */; };
 		3A40F6DE1CD8D8D70078FA11 /* SubscribeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A40F6DC1CD8D8D70078FA11 /* SubscribeView.swift */; };
-		3A40F6DF1CD8D8D70078FA11 /* SubscribeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A40F6DD1CD8D8D70078FA11 /* SubscribeCollectionViewCell.swift */; };
+		3A40F6DF1CD8D8D70078FA11 /* SlideCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A40F6DD1CD8D8D70078FA11 /* SlideCollectionViewCell.swift */; };
 		3A40F6E11CD8D8E00078FA11 /* SubscriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A40F6E01CD8D8E00078FA11 /* SubscriptionViewController.swift */; };
 		3A9CD97B1D38E1320023EE30 /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9CD97A1D38E1320023EE30 /* Option.swift */; };
 		3A9CD97D1D38E13E0023EE30 /* Slide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9CD97C1D38E13E0023EE30 /* Slide.swift */; };
+		3AE2B63E1D3AB1250010221E /* OptionStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE2B63C1D3AB1250010221E /* OptionStyle.swift */; };
+		3AE2B63F1D3AB1250010221E /* SlideStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE2B63D1D3AB1250010221E /* SlideStyle.swift */; };
+		3AE2B6421D3AB15D0010221E /* OptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE2B6411D3AB15D0010221E /* OptionTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,10 +35,13 @@
 		3A40F6AD1CD8D33A0078FA11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3A40F6B21CD8D33B0078FA11 /* SubscriptionPromptTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SubscriptionPromptTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A40F6DC1CD8D8D70078FA11 /* SubscribeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscribeView.swift; sourceTree = "<group>"; };
-		3A40F6DD1CD8D8D70078FA11 /* SubscribeCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscribeCollectionViewCell.swift; sourceTree = "<group>"; };
+		3A40F6DD1CD8D8D70078FA11 /* SlideCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideCollectionViewCell.swift; sourceTree = "<group>"; };
 		3A40F6E01CD8D8E00078FA11 /* SubscriptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionViewController.swift; sourceTree = "<group>"; };
 		3A9CD97A1D38E1320023EE30 /* Option.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Option.swift; sourceTree = "<group>"; };
 		3A9CD97C1D38E13E0023EE30 /* Slide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Slide.swift; sourceTree = "<group>"; };
+		3AE2B63C1D3AB1250010221E /* OptionStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionStyle.swift; sourceTree = "<group>"; };
+		3AE2B63D1D3AB1250010221E /* SlideStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideStyle.swift; sourceTree = "<group>"; };
+		3AE2B6411D3AB15D0010221E /* OptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +85,7 @@
 			children = (
 				3A40F6E01CD8D8E00078FA11 /* SubscriptionViewController.swift */,
 				3A9CD9791D38E11D0023EE30 /* Models */,
+				3AE2B6401D3AB1290010221E /* Styles */,
 				3A9CD9781D38E1160023EE30 /* Views */,
 				3A40F6AB1CD8D33A0078FA11 /* SubscriptionPrompt.h */,
 				3A40F6AD1CD8D33A0078FA11 /* Info.plist */,
@@ -90,7 +97,8 @@
 			isa = PBXGroup;
 			children = (
 				3A40F6DC1CD8D8D70078FA11 /* SubscribeView.swift */,
-				3A40F6DD1CD8D8D70078FA11 /* SubscribeCollectionViewCell.swift */,
+				3A40F6DD1CD8D8D70078FA11 /* SlideCollectionViewCell.swift */,
+				3AE2B6411D3AB15D0010221E /* OptionTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -102,6 +110,15 @@
 				3A9CD97C1D38E13E0023EE30 /* Slide.swift */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		3AE2B6401D3AB1290010221E /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				3AE2B63C1D3AB1250010221E /* OptionStyle.swift */,
+				3AE2B63D1D3AB1250010221E /* SlideStyle.swift */,
+			);
+			name = Styles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -212,10 +229,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3AE2B6421D3AB15D0010221E /* OptionTableViewCell.swift in Sources */,
+				3AE2B63E1D3AB1250010221E /* OptionStyle.swift in Sources */,
 				3A9CD97B1D38E1320023EE30 /* Option.swift in Sources */,
 				3A40F6E11CD8D8E00078FA11 /* SubscriptionViewController.swift in Sources */,
 				3A40F6DE1CD8D8D70078FA11 /* SubscribeView.swift in Sources */,
-				3A40F6DF1CD8D8D70078FA11 /* SubscribeCollectionViewCell.swift in Sources */,
+				3A40F6DF1CD8D8D70078FA11 /* SlideCollectionViewCell.swift in Sources */,
+				3AE2B63F1D3AB1250010221E /* SlideStyle.swift in Sources */,
 				3A9CD97D1D38E13E0023EE30 /* Slide.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

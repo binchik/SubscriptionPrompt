@@ -1,5 +1,5 @@
 //
-//  SubscribeCollectionViewCell.swift
+//  SlideCollectionViewCell.swift
 //  SubscriptionPrompt
 //
 //  Created by Binur Konarbayev on 4/29/16.
@@ -8,55 +8,47 @@
 
 import UIKit
 
-final class SubscribeCollectionViewCell: UICollectionViewCell {
+final class SlideCollectionViewCell: UICollectionViewCell {
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .ScaleAspectFit
         imageView.clipsToBounds = true
         return imageView
     }()
-    lazy var commentLabel: UILabel = {
+    lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.text = "Comment"
         label.textAlignment = .Center
-        label.font = .systemFontOfSize(16)
         label.setContentCompressionResistancePriority(1000, forAxis: .Vertical)
         return label
     }()
-    lazy var commentSubtitleLabel: UILabel = {
+    lazy var subtitleLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.text = "Comment subtitle"
         label.textAlignment = .Center
-        label.textColor = .lightGrayColor()
-        label.font = .systemFontOfSize(16)
         label.setContentCompressionResistancePriority(1000, forAxis: .Vertical)
         return label
     }()
-    
-    // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setUpViews()
-        setUpConstraints()
+        setUp()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        setUp()
+    }
+    
+    private func setUp() {
         setUpViews()
         setUpConstraints()
     }
     
-    // MARK: - Private
-    
     private func setUpViews() {
-        backgroundColor = .whiteColor()
-        contentView.backgroundColor = .whiteColor()
-        [imageView, commentLabel, commentSubtitleLabel].forEach {
+        [imageView, titleLabel, subtitleLabel].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
-            self.contentView.addSubview($0)
+            contentView.addSubview($0)
         }
     }
     
@@ -75,35 +67,51 @@ final class SubscribeCollectionViewCell: UICollectionViewCell {
                 attribute: .Trailing, multiplier: 1,
                 constant: 0),
             
-            NSLayoutConstraint(item: commentLabel, attribute: .Top,
+            NSLayoutConstraint(item: titleLabel, attribute: .Top,
                 relatedBy: .Equal, toItem: imageView,
                 attribute: .Bottom, multiplier: 1,
                 constant: 4),
-            NSLayoutConstraint(item: commentLabel, attribute: .Leading,
+            NSLayoutConstraint(item: titleLabel, attribute: .Leading,
                 relatedBy: .Equal, toItem: contentView,
                 attribute: .Leading, multiplier: 1,
                 constant: 4),
-            NSLayoutConstraint(item: commentLabel, attribute: .Trailing,
+            NSLayoutConstraint(item: titleLabel, attribute: .Trailing,
                 relatedBy: .Equal, toItem: contentView,
                 attribute: .Trailing, multiplier: 1,
                 constant: -4),
             
-            NSLayoutConstraint(item: commentSubtitleLabel, attribute: .Top,
-                relatedBy: .Equal, toItem: commentLabel,
+            NSLayoutConstraint(item: subtitleLabel, attribute: .Top,
+                relatedBy: .Equal, toItem: titleLabel,
                 attribute: .Bottom, multiplier: 1,
                 constant: 4),
-            NSLayoutConstraint(item: commentSubtitleLabel, attribute: .Leading,
+            NSLayoutConstraint(item: subtitleLabel, attribute: .Leading,
                 relatedBy: .Equal, toItem: contentView,
                 attribute: .Leading, multiplier: 1,
                 constant: 4),
-            NSLayoutConstraint(item: commentSubtitleLabel, attribute: .Trailing,
+            NSLayoutConstraint(item: subtitleLabel, attribute: .Trailing,
                 relatedBy: .Equal, toItem: contentView,
                 attribute: .Trailing, multiplier: 1,
                 constant: -4),
-            NSLayoutConstraint(item: commentSubtitleLabel, attribute: .Bottom,
+            NSLayoutConstraint(item: subtitleLabel, attribute: .Bottom,
                 relatedBy: .Equal, toItem: contentView,
                 attribute: .Bottom, multiplier: 1,
                 constant: -4)
             ].forEach { $0.active = true }
+    }
+}
+
+extension SlideCollectionViewCell {
+    func setUp(withSlide slide: Slide) {
+        imageView.image = slide.image
+        titleLabel.text = slide.title
+        subtitleLabel.text = slide.subtitle
+    }
+    
+    func setUp(withSlideStyle style: SlideStyle) {
+        backgroundColor = style.backgroundColor
+        titleLabel.font = style.titleFont
+        subtitleLabel.font = style.subtitleFont
+        titleLabel.textColor = style.titleColor
+        subtitleLabel.textColor = style.titleColor
     }
 }
