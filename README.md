@@ -90,6 +90,9 @@ init(backgroundColor: UIColor? = nil, titleFont: UIFont? = nil,
 }
 ```
 
+The title is customizable via the `titleFont` and `titleColor` properties.
+You can also change the background dim color using the `dimColor: UIColor` and `dimView: UIView` properties.
+
 # TODO
 
 1. Bug fixes.
