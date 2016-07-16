@@ -27,15 +27,22 @@ import SubscriptionPrompt
 
 # Usage
 
-Just initialize the SubscriptionViewontroller with the following constructor:
+Just initialize the SubscriptionViewontroller with the following constructor, 
+you can omit some parameters since they have default values:
 
 ```swift
-init(title: String, images: [UIImage], commentTexts: [String], 
-      commentSubtitleTexts: [String], subscribeOptionsTexts: [String], 
-      cancelOptionText: String)
+init(title: String? = nil, slides: [Slide], options: [Option],
+	cancelMessage: String? = nil, restoreButtonTitle: String? = nil)
 ```
 
 and present it.
+
+`Slide` and `Option` are structs, use the following inits to create them:
+
+```swift
+init(image: UIImage?, title: String?, subtitle: String?)
+init(title: String?, checked: Bool = false)
+```
 
 To get the index of tapped rows, implement the SubscriptionViewControllerDelegate.
 
@@ -56,9 +63,10 @@ func subscriptionViewControllerRowTapped(atIndex index: Int) {
 
 1. Fonts customizations.
 2. Colors customziations.
-3. Contents customizations.
-4. Get rid of SnapKit dependency.
-5. Documentation.
+3. Add closures instead of delegates. Example:
 
-
-
+```swift
+subscriptionVC.rowTapped { idx in
+	print("tapped index: \(idx)")
+}
+```
