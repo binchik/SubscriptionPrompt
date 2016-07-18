@@ -77,7 +77,6 @@ Use the following init for `OptionStyle`:
 ```swift
 init(backgroundColor: UIColor? = nil, textFont: UIFont? = nil,
 	textColor: UIColor? = nil, accessoryType: UITableViewCellAccessoryType? = nil)
-}
 ```
 
 and for `SlideStyle`:
@@ -86,10 +85,10 @@ and for `SlideStyle`:
 init(backgroundColor: UIColor? = nil, titleFont: UIFont? = nil,
 	subtitleFont: UIFont? = nil, titleColor: UIColor? = nil, 
 	subtitleColor: UIColor? = nil)
-}
 ```
 
 The title is customizable via the `titleFont` and `titleColor` properties.
+
 You can also change the background dim color using the `dimColor: UIColor` and `dimView: UIView` properties.
 
 # TODO
