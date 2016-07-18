@@ -22,8 +22,7 @@ import SubscriptionPrompt
 ```
 
 #### Manually
-1. Download and drop ```/SubscriptionPrompt```folder in your project.  
-2. Congratulations!  
+Download and drop ```/SubscriptionPrompt```folder in your project.  
 
 # Usage
 
