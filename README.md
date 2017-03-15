@@ -14,13 +14,6 @@ use_frameworks!
 pod 'SubscriptionPrompt'
 ```
 
-To get the full benefits import `SubscriptionPrompt` wherever you import UIKit
-
-``` swift
-import UIKit
-import SubscriptionPrompt
-```
-
 #### Manually
 Download and drop ```/SubscriptionPrompt```folder in your project.  
 
