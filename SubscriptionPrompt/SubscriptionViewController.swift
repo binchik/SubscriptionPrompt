@@ -8,15 +8,15 @@
 
 import UIKit
 
-@objc public protocol SubscriptionViewControllerDelegate {
+public protocol SubscriptionViewControllerDelegate {
     func subscriptionViewControllerRowTapped(atIndex index: Int)
     func restoreButtonTapped()
 }
 
 @objc public protocol SubscriptionViewControllerStylingDelegate {
-    optional func subscriptionViewControllerSlideStyle(atIndex index: Int) -> SlideStyle
-    optional func subscriptionViewControllerOptionStyle(atIndex index: Int) -> OptionStyle
-    optional func subscriptionViewControllerNotNowButtonStyle() -> OptionStyle
+    @objc optional func subscriptionViewControllerSlideStyle(atIndex index: Int) -> SlideStyle
+    @objc optional func subscriptionViewControllerOptionStyle(atIndex index: Int) -> OptionStyle
+    @objc optional func subscriptionViewControllerNotNowButtonStyle() -> OptionStyle
 }
 
 public final class SubscriptionViewController: UIViewController, SubscribeViewDelegate {
@@ -24,7 +24,7 @@ public final class SubscriptionViewController: UIViewController, SubscribeViewDe
     
     public var dimColor: UIColor = UIColor(white: 0, alpha: 0.5) {
         didSet {
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 self.view.backgroundColor = self.dimColor
             }
         }
@@ -34,23 +34,23 @@ public final class SubscriptionViewController: UIViewController, SubscribeViewDe
         didSet {
             guard let dimView = dimView else { return }
             dimView.translatesAutoresizingMaskIntoConstraints = false
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 oldValue?.removeFromSuperview()
                 self.view.insertSubview(dimView, belowSubview: self.subscribeView)
                 [
-                    NSLayoutConstraint(item: dimView, attribute: .Leading,
-                        relatedBy: .Equal, toItem: self.view, attribute: .Leading,
+                    NSLayoutConstraint(item: dimView, attribute: .leading,
+                        relatedBy: .equal, toItem: self.view, attribute: .leading,
                         multiplier: 1, constant: 0),
-                    NSLayoutConstraint(item: dimView, attribute: .Trailing,
-                        relatedBy: .Equal, toItem: self.view, attribute: .Trailing,
+                    NSLayoutConstraint(item: dimView, attribute: .trailing,
+                        relatedBy: .equal, toItem: self.view, attribute: .trailing,
                         multiplier: 1, constant: 0),
-                    NSLayoutConstraint(item: dimView, attribute: .Top,
-                        relatedBy: .Equal, toItem: self.view, attribute: .Top,
+                    NSLayoutConstraint(item: dimView, attribute: .top,
+                        relatedBy: .equal, toItem: self.view, attribute: .top,
                         multiplier: 1, constant: 0),
-                    NSLayoutConstraint(item: dimView, attribute: .Bottom,
-                        relatedBy: .Equal, toItem: self.view, attribute: .Bottom,
+                    NSLayoutConstraint(item: dimView, attribute: .bottom,
+                        relatedBy: .equal, toItem: self.view, attribute: .bottom,
                         multiplier: 1, constant: 0)
-                    ].forEach { $0.active = true }
+                    ].forEach { $0.isActive = true }
             }
         }
     }
@@ -70,8 +70,8 @@ public final class SubscriptionViewController: UIViewController, SubscribeViewDe
     }
     public var restoreButtonTitle: String? {
         didSet {
-            dispatch_async(dispatch_get_main_queue()) {
-                self.restorePurchasesButton.setTitle(self.restoreButtonTitle, forState: .Normal)
+            DispatchQueue.main.async {
+                self.restorePurchasesButton.setTitle(self.restoreButtonTitle, for: .normal)
             }
         }
     }
@@ -82,9 +82,8 @@ public final class SubscriptionViewController: UIViewController, SubscribeViewDe
     private var subscribeView: SubscribeView
     private lazy var restorePurchasesButton: UIButton = {
         let button = UIButton()
-        button.titleLabel?.font = .systemFontOfSize(18)
-        button.addTarget(self, action: #selector(restoreButtonTapped),
-                         forControlEvents: .TouchUpInside)
+        button.titleLabel?.font = .systemFont(ofSize: 18)
+        button.addTarget(self, action: #selector(restoreButtonTapped), for: .touchUpInside)
         return button
     }()
     private var constraintsSetUp = false
@@ -103,7 +102,7 @@ public final class SubscriptionViewController: UIViewController, SubscribeViewDe
         
         definesPresentationContext = true
         providesPresentationContextTransitionStyle = true
-        modalPresentationStyle = .OverCurrentContext
+        modalPresentationStyle = .overCurrentContext
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -116,7 +115,7 @@ public final class SubscriptionViewController: UIViewController, SubscribeViewDe
         super.viewDidLoad()
         view.backgroundColor = UIColor(white: 0, alpha: 0.5)
         
-        var restorePurchasesButtonOptional: UIButton? = restoreButtonTitle != nil ? restorePurchasesButton : nil
+        let restorePurchasesButtonOptional: UIButton? = restoreButtonTitle != nil ? restorePurchasesButton : nil
         
         ([subscribeView, restorePurchasesButtonOptional] as [UIView?])
             .flatMap { $0 }
@@ -129,46 +128,45 @@ public final class SubscriptionViewController: UIViewController, SubscribeViewDe
     
     // MARK: - Public
     
-    public func animateDraggingToTheRight(duration: NSTimeInterval = 2) {
-        subscribeView.animateDraggingToTheRight(duration)
+    public func animateDraggingToTheRight(duration: TimeInterval = 2) {
+        subscribeView.animateDraggingToTheRight(duration: duration)
     }
     
     // MARK: - Private
     
     private func setUpConstraints() {
         [
-            NSLayoutConstraint(item: subscribeView, attribute: .Top,
-                relatedBy: .Equal, toItem: view, attribute: .Top,
+            NSLayoutConstraint(item: subscribeView, attribute: .top,
+                relatedBy: .equal, toItem: view, attribute: .top,
                 multiplier: 1, constant: 40),
-            NSLayoutConstraint(item: subscribeView, attribute: .Leading,
-                relatedBy: .Equal, toItem: view, attribute: .Leading,
+            NSLayoutConstraint(item: subscribeView, attribute: .leading,
+                relatedBy: .equal, toItem: view, attribute: .leading,
                 multiplier: 1, constant: 20),
-            NSLayoutConstraint(item: subscribeView, attribute: .Trailing,
-                relatedBy: .Equal, toItem: view, attribute: .Trailing,
+            NSLayoutConstraint(item: subscribeView, attribute: .trailing,
+                relatedBy: .equal, toItem: view, attribute: .trailing,
                 multiplier: 1, constant: -20),
-            
-            NSLayoutConstraint(item: restorePurchasesButton, attribute: .Top,
-                relatedBy: .Equal, toItem: subscribeView, attribute: .Bottom,
+            NSLayoutConstraint(item: restorePurchasesButton, attribute: .top,
+                relatedBy: .equal, toItem: subscribeView, attribute: .bottom,
                 multiplier: 1, constant: 20),
-            NSLayoutConstraint(item: restorePurchasesButton, attribute: .Leading,
-                relatedBy: .Equal, toItem: view, attribute: .Leading,
+            NSLayoutConstraint(item: restorePurchasesButton, attribute: .leading,
+                relatedBy: .equal, toItem: view, attribute: .leading,
                 multiplier: 1, constant: 8),
-            NSLayoutConstraint(item: restorePurchasesButton, attribute: .Trailing,
-                relatedBy: .Equal, toItem: view, attribute: .Trailing,
+            NSLayoutConstraint(item: restorePurchasesButton, attribute: .trailing,
+                relatedBy: .equal, toItem: view, attribute: .trailing,
                 multiplier: 1, constant: -8),
-            NSLayoutConstraint(item: restorePurchasesButton, attribute: .Bottom,
-                relatedBy: .Equal, toItem: view, attribute: .Bottom,
+            NSLayoutConstraint(item: restorePurchasesButton, attribute: .bottom,
+                relatedBy: .equal, toItem: view, attribute: .bottom,
                 multiplier: 1, constant: -10)
-            ].forEach { $0.active = true }
+            ].forEach { $0.isActive = true }
     }
     
-    func restoreButtonTapped() {
+    @objc public func restoreButtonTapped() {
         delegate?.restoreButtonTapped()
     }
     
     // MARK: - SubscriptionViewDelegate
     
-    func rowTapped(atIndex index: Int) {
+    public func rowTapped(atIndex index: Int) {
         delegate?.subscriptionViewControllerRowTapped(atIndex: index)
     }
 }

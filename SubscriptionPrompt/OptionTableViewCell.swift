@@ -23,15 +23,15 @@ final class OptionTableViewCell: UITableViewCell {
     
     private func setUpViews() {
         let backgroundView = UIView()
-        backgroundView.backgroundColor = .orangeColor()
+        backgroundView.backgroundColor = .orange
         selectedBackgroundView = backgroundView
-        textLabel?.textAlignment = .Center
+        textLabel?.textAlignment = .center
     }
 }
 
 extension OptionTableViewCell {
     func setUp(withOption option: Option) {
-        accessoryType = option.checked ? (disclosureType ?? .Checkmark) : .None
+        accessoryType = option.checked ? (disclosureType ?? .checkmark) : .none
         textLabel?.text = option.title
     }
     
