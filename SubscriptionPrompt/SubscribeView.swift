@@ -22,7 +22,7 @@ protocol SubscribeViewDelegate {
 
 extension SubscribeViewDelegate where Self: UIViewController {
     func dismissButtonTouched() {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true)
     }
 }
 
@@ -31,14 +31,14 @@ final class SubscribeView: UIView {
     var stylingDelegate: SubscriptionViewControllerStylingDelegate?
     var title: String? {
         didSet {
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 self.titleLabel.text = self.title
             }
         }
     }
     var slides: [Slide]? {
         didSet {
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
         }
@@ -53,7 +53,7 @@ final class SubscribeView: UIView {
     var titleFont: UIFont? {
         didSet {
             guard let titleFont = titleFont else { return }
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 self.titleLabel.font = titleFont
             }
         }
@@ -61,7 +61,7 @@ final class SubscribeView: UIView {
     var titleColor: UIColor? {
         didSet {
             guard let titleColor = titleColor else { return }
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 self.titleLabel.textColor = titleColor
             }
         }
@@ -69,24 +69,24 @@ final class SubscribeView: UIView {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFontOfSize(24)
-        label.textAlignment = .Center
+        label.font = .systemFont(ofSize: 24)
+        label.textAlignment = .center
         return label
     }()
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
-        layout.scrollDirection = .Horizontal
+        layout.scrollDirection = .horizontal
         return layout
     }()
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout)
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.pagingEnabled = true
-        collectionView.backgroundColor = .whiteColor()
-        collectionView.registerClass(SlideCollectionViewCell.self, forCellWithReuseIdentifier: collectionViewCellIdentifier)
+        collectionView.isPagingEnabled = true
+        collectionView.backgroundColor = .white
+        collectionView.register(SlideCollectionViewCell.self, forCellWithReuseIdentifier: collectionViewCellIdentifier)
         return collectionView
     }()
     private lazy var tableView: UITableView = {
@@ -94,12 +94,12 @@ final class SubscribeView: UIView {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = 55
-        tableView.scrollEnabled = false
-        tableView.separatorStyle = .None
-        tableView.separatorColor = .whiteColor()
-        tableView.separatorInset = UIEdgeInsetsZero
-        tableView.layoutMargins = UIEdgeInsetsZero
-        tableView.registerClass(OptionTableViewCell.self, forCellReuseIdentifier: tableViewCellIdentifier)
+        tableView.isScrollEnabled = false
+        tableView.separatorStyle = .none
+        tableView.separatorColor = .white
+        tableView.separatorInset = UIEdgeInsets.zero
+        tableView.layoutMargins = UIEdgeInsets.zero
+        tableView.register(OptionTableViewCell.self, forCellReuseIdentifier: tableViewCellIdentifier)
         tableView.tableFooterView = UIView(frame: .zero)
         return tableView
     }()
@@ -134,13 +134,13 @@ final class SubscribeView: UIView {
     
     // MARK: - Public
     
-    func animateDraggingToTheRight(duration: NSTimeInterval = 2) {
-        UIView.animateWithDuration(duration / 2, delay: 0, options: .AllowUserInteraction, animations: {
+    func animateDraggingToTheRight(duration: TimeInterval = 2) {
+        UIView.animate(withDuration: duration / 2, delay: 0, options: .allowUserInteraction, animations: {
             self.collectionView.contentOffset = CGPoint(x: 120, y: 0)
             self.layoutIfNeeded()
         }) {
             if !$0 { return }
-            UIView.animateWithDuration(duration / 2, delay: 0, options: .AllowUserInteraction, animations: {
+            UIView.animate(withDuration: duration / 2, delay: 0, options: .allowUserInteraction, animations: {
                 self.collectionView.contentOffset = CGPoint(x: 0, y: 0)
                 self.layoutIfNeeded()
                 }, completion: nil)
@@ -159,62 +159,62 @@ final class SubscribeView: UIView {
     }
     
     private func setUpViews() {
-        backgroundColor = .whiteColor()
+        backgroundColor = .white
         layer.masksToBounds = true
         layer.cornerRadius = 10
-        
-        [titleLabel, collectionView, tableView].forEach {
+        let views: [UIView] = [titleLabel, collectionView, tableView]
+        views.forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview($0)
         }
     }
     
     private func setUpConstraints() {
-        tableViewHeightConstraint = NSLayoutConstraint(item: tableView, attribute: .Height,
-                                                       relatedBy: .Equal, toItem: nil,
-                                                       attribute: .NotAnAttribute, multiplier: 1,
+        tableViewHeightConstraint = NSLayoutConstraint(item: tableView, attribute: .height,
+                                                       relatedBy: .equal, toItem: nil,
+                                                       attribute: .notAnAttribute, multiplier: 1,
                                                        constant: tableView.contentSize.height)
         
         [
-            NSLayoutConstraint(item: titleLabel, attribute: .Top,
-                relatedBy: .Equal, toItem: self, attribute: .Top,
+            NSLayoutConstraint(item: titleLabel, attribute: .top,
+                relatedBy: .equal, toItem: self, attribute: .top,
                 multiplier: 1, constant: 16),
-            NSLayoutConstraint(item: titleLabel, attribute: .Leading,
-                relatedBy: .Equal, toItem: self, attribute: .Leading,
+            NSLayoutConstraint(item: titleLabel, attribute: .leading,
+                relatedBy: .equal, toItem: self, attribute: .leading,
                 multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: titleLabel, attribute: .Trailing,
-                relatedBy: .Equal, toItem: self, attribute: .Trailing,
-                multiplier: 1, constant: 0),
-            
-            NSLayoutConstraint(item: collectionView, attribute: .Top,
-                relatedBy: .Equal, toItem: titleLabel, attribute: .Bottom,
-                multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: collectionView, attribute: .Leading,
-                relatedBy: .Equal, toItem: self, attribute: .Leading,
-                multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: collectionView, attribute: .Trailing,
-                relatedBy: .Equal, toItem: self, attribute: .Trailing,
+            NSLayoutConstraint(item: titleLabel, attribute: .trailing,
+                relatedBy: .equal, toItem: self, attribute: .trailing,
                 multiplier: 1, constant: 0),
             
-            NSLayoutConstraint(item: tableView, attribute: .Top,
-                relatedBy: .Equal, toItem: collectionView, attribute: .Bottom,
+            NSLayoutConstraint(item: collectionView, attribute: .top,
+                relatedBy: .equal, toItem: titleLabel, attribute: .bottom,
                 multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: tableView, attribute: .Leading,
-                relatedBy: .Equal, toItem: self, attribute: .Leading,
+            NSLayoutConstraint(item: collectionView, attribute: .leading,
+                relatedBy: .equal, toItem: self, attribute: .leading,
                 multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: tableView, attribute: .Trailing,
-                relatedBy: .Equal, toItem: self, attribute: .Trailing,
+            NSLayoutConstraint(item: collectionView, attribute: .trailing,
+                relatedBy: .equal, toItem: self, attribute: .trailing,
                 multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: tableView, attribute: .Bottom,
-                relatedBy: .Equal, toItem: self, attribute: .Bottom,
+            
+            NSLayoutConstraint(item: tableView, attribute: .top,
+                relatedBy: .equal, toItem: collectionView, attribute: .bottom,
+                multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: tableView, attribute: .leading,
+                relatedBy: .equal, toItem: self, attribute: .leading,
+                multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: tableView, attribute: .trailing,
+                relatedBy: .equal, toItem: self, attribute: .trailing,
+                multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: tableView, attribute: .bottom,
+                relatedBy: .equal, toItem: self, attribute: .bottom,
                 multiplier: 1, constant: 0),
             
             tableViewHeightConstraint
-            ].flatMap{ $0 }.forEach { $0.active = true }
+            ].flatMap{ $0 }.forEach { $0.isActive = true }
     }
     
     private func reloadTableView() {
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             self.tableView.reloadData()
             self.tableViewHeightConstraint?.constant = self.tableView.contentSize.height
         }
@@ -234,23 +234,21 @@ final class SubscribeView: UIView {
 extension SubscribeView: UITableViewDataSource, UITableViewDelegate {
     private func optionStyle(atIndex index: Int) -> OptionStyle {
         return stylingDelegate?.subscriptionViewControllerOptionStyle?(atIndex: index)
-            ?? OptionStyle(backgroundColor: UIColor.orangeColor().colorWithAlphaComponent(CGFloat(1 / (Double(index) + 0.75))),
-                           textFont: .systemFontOfSize(17), textColor: .whiteColor(), accessoryType: .Checkmark)
+            ?? OptionStyle(backgroundColor: .orange, textFont: .systemFont(ofSize: 17), textColor: .white, accessoryType: .checkmark)
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (options?.count ?? 0) + (notNowButtonHidden ? 0 : 1)
     }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell,
-                   forRowAtIndexPath indexPath: NSIndexPath) {
-        cell.separatorInset = UIEdgeInsetsZero
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.separatorInset = UIEdgeInsets.zero
         cell.preservesSuperviewLayoutMargins = false
-        cell.layoutMargins = UIEdgeInsetsZero
+        cell.layoutMargins = UIEdgeInsets.zero
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(tableViewCellIdentifier) as! OptionTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = OptionTableViewCell.init(style: .default, reuseIdentifier: tableViewCellIdentifier)
         let row = indexPath.row
         let isNotNowButtonRow = !notNowButtonHidden && row == (options?.count ?? 0)
         
@@ -269,15 +267,16 @@ extension SubscribeView: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView .deselectRowAtIndexPath(indexPath, animated: true)
-        
-        if indexPath.row < options?.count {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView .deselectRow(at: indexPath, animated: true)
+        guard let options = self.options else { return }
+        if indexPath.row < options.count {
             delegate?.rowTapped(atIndex: indexPath.row)
         } else {
             if !notNowButtonHidden { delegate?.dismissButtonTouched() }
         }
     }
+    
 }
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
@@ -285,18 +284,18 @@ extension SubscribeView: UITableViewDataSource, UITableViewDelegate {
 extension SubscribeView: UICollectionViewDataSource, UICollectionViewDelegate {
     private func slideStyle(atIndex index: Int) -> SlideStyle {
         return stylingDelegate?.subscriptionViewControllerSlideStyle?(atIndex: index) ??
-            SlideStyle(backgroundColor: nil, titleFont: .systemFontOfSize(16),
-                       subtitleFont: .systemFontOfSize(16), titleColor: nil,
-                       subtitleColor: .lightGrayColor())
+            SlideStyle(backgroundColor: nil, titleFont: .systemFont(ofSize: 16),
+                       subtitleFont: .systemFont(ofSize: 16), titleColor: nil,
+                       subtitleColor: .lightGray)
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return slides?.count ?? 0
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(
-            collectionViewCellIdentifier, forIndexPath: indexPath) as! SlideCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: collectionViewCellIdentifier, for: indexPath) as! SlideCollectionViewCell
         
         cell.setUp(withSlideStyle: slideStyle(atIndex: indexPath.row))
         if let slide = slides?[indexPath.row] {
@@ -305,4 +304,5 @@ extension SubscribeView: UICollectionViewDataSource, UICollectionViewDelegate {
         
         return cell
     }
+    
 }

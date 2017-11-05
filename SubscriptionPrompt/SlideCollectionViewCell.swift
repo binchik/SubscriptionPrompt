@@ -11,22 +11,22 @@ import UIKit
 final class SlideCollectionViewCell: UICollectionViewCell {
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .ScaleAspectFit
+        imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         return imageView
     }()
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.textAlignment = .Center
-        label.setContentCompressionResistancePriority(1000, forAxis: .Vertical)
+        label.textAlignment = .center
+        label.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .vertical)
         return label
     }()
     lazy var subtitleLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.textAlignment = .Center
-        label.setContentCompressionResistancePriority(1000, forAxis: .Vertical)
+        label.textAlignment = .center
+        label.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .vertical)
         return label
     }()
     
@@ -46,7 +46,8 @@ final class SlideCollectionViewCell: UICollectionViewCell {
     }
     
     private func setUpViews() {
-        [imageView, titleLabel, subtitleLabel].forEach {
+        let views: [UIView] = [imageView, titleLabel, subtitleLabel]
+        views.forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview($0)
         }
@@ -54,49 +55,49 @@ final class SlideCollectionViewCell: UICollectionViewCell {
     
     private func setUpConstraints() {
         [
-            NSLayoutConstraint(item: imageView, attribute: .Top,
-                relatedBy: .Equal, toItem: contentView,
-                attribute: .Top, multiplier: 1,
+            NSLayoutConstraint(item: imageView, attribute: .top,
+                relatedBy: .equal, toItem: contentView,
+                attribute: .top, multiplier: 1,
                 constant: 0),
-            NSLayoutConstraint(item: imageView, attribute: .Leading,
-                relatedBy: .Equal, toItem: contentView,
-                attribute: .Leading, multiplier: 1,
+            NSLayoutConstraint(item: imageView, attribute: .leading,
+                relatedBy: .equal, toItem: contentView,
+                attribute: .leading, multiplier: 1,
                 constant: 0),
-            NSLayoutConstraint(item: imageView, attribute: .Trailing,
-                relatedBy: .Equal, toItem: contentView,
-                attribute: .Trailing, multiplier: 1,
+            NSLayoutConstraint(item: imageView, attribute: .trailing,
+                relatedBy: .equal, toItem: contentView,
+                attribute: .trailing, multiplier: 1,
                 constant: 0),
             
-            NSLayoutConstraint(item: titleLabel, attribute: .Top,
-                relatedBy: .Equal, toItem: imageView,
-                attribute: .Bottom, multiplier: 1,
+            NSLayoutConstraint(item: titleLabel, attribute: .top,
+                relatedBy: .equal, toItem: imageView,
+                attribute: .bottom, multiplier: 1,
                 constant: 4),
-            NSLayoutConstraint(item: titleLabel, attribute: .Leading,
-                relatedBy: .Equal, toItem: contentView,
-                attribute: .Leading, multiplier: 1,
+            NSLayoutConstraint(item: titleLabel, attribute: .leading,
+                relatedBy: .equal, toItem: contentView,
+                attribute: .leading, multiplier: 1,
                 constant: 4),
-            NSLayoutConstraint(item: titleLabel, attribute: .Trailing,
-                relatedBy: .Equal, toItem: contentView,
-                attribute: .Trailing, multiplier: 1,
+            NSLayoutConstraint(item: titleLabel, attribute: .trailing,
+                relatedBy: .equal, toItem: contentView,
+                attribute: .trailing, multiplier: 1,
                 constant: -4),
             
-            NSLayoutConstraint(item: subtitleLabel, attribute: .Top,
-                relatedBy: .Equal, toItem: titleLabel,
-                attribute: .Bottom, multiplier: 1,
+            NSLayoutConstraint(item: subtitleLabel, attribute: .top,
+                relatedBy: .equal, toItem: titleLabel,
+                attribute: .bottom, multiplier: 1,
                 constant: 4),
-            NSLayoutConstraint(item: subtitleLabel, attribute: .Leading,
-                relatedBy: .Equal, toItem: contentView,
-                attribute: .Leading, multiplier: 1,
+            NSLayoutConstraint(item: subtitleLabel, attribute: .leading,
+                relatedBy: .equal, toItem: contentView,
+                attribute: .leading, multiplier: 1,
                 constant: 4),
-            NSLayoutConstraint(item: subtitleLabel, attribute: .Trailing,
-                relatedBy: .Equal, toItem: contentView,
-                attribute: .Trailing, multiplier: 1,
+            NSLayoutConstraint(item: subtitleLabel, attribute: .trailing,
+                relatedBy: .equal, toItem: contentView,
+                attribute: .trailing, multiplier: 1,
                 constant: -4),
-            NSLayoutConstraint(item: subtitleLabel, attribute: .Bottom,
-                relatedBy: .Equal, toItem: contentView,
-                attribute: .Bottom, multiplier: 1,
+            NSLayoutConstraint(item: subtitleLabel, attribute: .bottom,
+                relatedBy: .equal, toItem: contentView,
+                attribute: .bottom, multiplier: 1,
                 constant: -4)
-            ].forEach { $0.active = true }
+            ].forEach { $0.isActive = true }
     }
 }
 
