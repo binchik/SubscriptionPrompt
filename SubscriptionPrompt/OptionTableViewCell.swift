@@ -9,7 +9,7 @@
 import UIKit
 
 final class OptionTableViewCell: UITableViewCell {
-    private var disclosureType: UITableViewCellAccessoryType?
+    fileprivate var disclosureType: UITableViewCellAccessoryType?
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -21,7 +21,7 @@ final class OptionTableViewCell: UITableViewCell {
         setUpViews()
     }
     
-    private func setUpViews() {
+    fileprivate func setUpViews() {
         let backgroundView = UIView()
         backgroundView.backgroundColor = .orange
         selectedBackgroundView = backgroundView

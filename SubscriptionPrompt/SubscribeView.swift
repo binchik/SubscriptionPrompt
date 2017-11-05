@@ -105,10 +105,10 @@ final class SubscribeView: UIView {
     }()
     
     private var tableViewHeightConstraint: NSLayoutConstraint?
-    private var notNowButtonHidden: Bool {
+    fileprivate var notNowButtonHidden: Bool {
         return cancelMessage == nil
     }
-    private var notNowButtonStyle: OptionStyle {
+    fileprivate var notNowButtonStyle: OptionStyle {
         return stylingDelegate?.subscriptionViewControllerNotNowButtonStyle?() ?? notNowButtonDefaultStyle
     }
     
