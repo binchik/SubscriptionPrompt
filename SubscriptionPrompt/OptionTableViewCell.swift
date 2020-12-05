@@ -9,9 +9,9 @@
 import UIKit
 
 final class OptionTableViewCell: UITableViewCell {
-    fileprivate var disclosureType: UITableViewCellAccessoryType?
+    fileprivate var disclosureType: UITableViewCell.AccessoryType?
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUpViews()
     }

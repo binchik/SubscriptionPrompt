@@ -12,10 +12,10 @@ import UIKit
     let backgroundColor: UIColor?
     let textFont: UIFont?
     let textColor: UIColor?
-    let accessoryType: UITableViewCellAccessoryType?
+    let accessoryType: UITableViewCell.AccessoryType?
     
     public init(backgroundColor: UIColor? = nil, textFont: UIFont? = nil,
-                textColor: UIColor? = nil, accessoryType: UITableViewCellAccessoryType? = nil) {
+                textColor: UIColor? = nil, accessoryType: UITableViewCell.AccessoryType? = nil) {
         self.backgroundColor = backgroundColor
         self.textFont = textFont
         self.textColor = textColor

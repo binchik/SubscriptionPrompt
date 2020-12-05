@@ -20,14 +20,14 @@ final class SlideCollectionViewCell: UICollectionViewCell {
         label.numberOfLines = 0
         label.textAlignment = .center
     
-        label.setContentCompressionResistancePriority(1000, for: .vertical)
+        label.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .vertical)
         return label
     }()
     lazy var subtitleLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.setContentCompressionResistancePriority(1000, for: .vertical)
+        label.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .vertical)
         return label
     }()
     
